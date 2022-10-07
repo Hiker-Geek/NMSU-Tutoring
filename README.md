@@ -1,7 +1,7 @@
 # NMSU-Tutoring: A tutor scheduling service for our Senior Project
 <a href="https://lucid.app/lucidchart/561b8934-867a-4234-bc64-1ea8db1dfbee/edit?invitationId=inv_b826c81d-24cd-4db4-a4e3-fd3cead760e1&page=uDe-dIt-NWfS#">GANTT Chart</a>
 ## Best practices for github:
-1. Create your own branch locally and push that branch to remote so that you have a private space to work in. DO NOT use a pre-existing branch. It creates major issues and has potential to delete work. This is also why we will never push directly to main. I will be putting a lock on the github to prevent pushing directly to main and all merge requests will need to be reviewed and authorized by someone else before merging.
+1. Every time you set out to make a new feature, create your own branch locally and push that branch to remote so that you have a private space to work in. DO NOT use a pre-existing branch, even if it was your private branch. We will be using branches as "save points" we can go back to, so pushing to a pre-existing branch has potential to delete work if that branch ever corrupts. This is also why we will never push directly to main. I will be putting a lock on the github to prevent pushing directly to main and all merge requests will need to be reviewed and authorized by someone else before merging.
 
 2. When creating branches checkout the main branch locally first (git checkout main), do "git pull origin main" to update main, then 'git checkout -b new-branch-name'
 
