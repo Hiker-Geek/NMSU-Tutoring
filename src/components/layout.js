@@ -1,27 +1,21 @@
 import * as React from 'react'
-import { Link, useStaticQuery, graphql } from 'gatsby'
-import {
-    container,
-    heading,
-    navLinks,
-    navLinkItem,
-    navLinkText,
-    siteTitle
-  } from './layout.module.css'
 
+// Link is a built in gatsby component for cleaner redirect handling
+import { Link } from 'gatsby'
+
+// These are references to styles in layout.module.css
+import {
+  container,
+  heading,
+  navLinks,
+  navLinkItem,
+  navLinkText
+} from './layout.module.css'
+
+// Creates layout component (React component)
 const Layout = ({ pageTitle, children }) => {
-  const data = useStaticQuery(graphql`
-    query {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
   return (
     <div className={container}>
-      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
       <nav>
         <ul className={navLinks}>
           <li className={navLinkItem}>
@@ -44,4 +38,5 @@ const Layout = ({ pageTitle, children }) => {
   )
 }
 
+// Export component
 export default Layout
