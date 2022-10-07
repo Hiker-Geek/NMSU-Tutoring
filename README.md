@@ -17,4 +17,4 @@
 
 6. NEVER MERGE INTO MAIN IF YOUR CODE HAS ERRORS. Always resolve errors before merging into main. Ideally you will resolve errors before pushing to your personal remote branch too.
 
-7. In case we need it here is a guide to git rebasing and git merging: <a href="https://www.freecodecamp.org/news/the-ultimate-guide-to-git-merge-and-git-rebase/"></a>
+7. In case we need it here is a guide to git rebasing and git merging: <a href="https://www.freecodecamp.org/news/the-ultimate-guide-to-git-merge-and-git-rebase/">
