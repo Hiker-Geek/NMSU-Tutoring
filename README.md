@@ -8,7 +8,7 @@
 3. BEFORE PUSHING, do "git pull" to update your branch (pulling any changes made in the remote's main branch), then push. This avoids merge conflicts on the remote. If you get a local merge conflict, that's okay, it is better to resolve merge conflicts locally than remotely. Here is a guide on how to resolve merge conflicts: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line#further-reading">Resolving Merge Conflicts</a>
 
 4. Make sure to have descriptive commit messages. This is so we can track when certain changes were made and backtrack if needed. For convenience we will be using semantic commit messages. What this means is that each message will be appended with either "feat:", "fix:", or "chore:" (as our main 3) to describe the type of changes you're committing. If you're wondering why, it decreases message length and its standard practice for git management in the professional world. Here's the guide for that: <a href ="https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716">Semantic messages guide</a>. We'll mostly just be using the basic ones though since they cover most issues we will ever have.
-  i. Rundown:
+  - Rundown:
     - feat: (new feature for the user, not a new feature for build script)
     - fix: (bug fix for the user, not a fix to a build script)
     - chore: (updating grunt tasks etc; no production code change)
