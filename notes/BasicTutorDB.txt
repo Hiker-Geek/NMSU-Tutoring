@@ -1,33 +1,60 @@
-create table users
-	(uID				int,
+Create table users
+	(aggieID		int 		NOT NULL UNIQUE,
 	 FirstName		varchar(32),
 	 LastName		varchar(32),
-	 Birthdate	    date,
-	 Email			varchar(32),
-	 DeptID				int,
-	 Category		varchar(32),
-	 TOS			char(1),
-	 Gender			char(1),
-	 primary key (uID)
+	 Password		varchar(32),
+	 Birthdate	   	 date,
+	 Email			varchar(32)	NOT NULL,
+	 Role			char(1)		NOT NULL,
+	 Gender		char(1),
+	 Bio		varChar(32),
+	 DeptID		int,
+	 Subject		varchar(32),
+	 primary key (aggieID)
 	);
+
+Create table tutors
+(aID			int			NOT NULL,
+	userTutorID		int			NOT NULL UNIQUE,
+	DeptID		int,
+	Subject		varchar(32),
+	 primary key (userTutorID),
+	 foreign key (aID) references users(aggieID)
+		on delete cascade
+);
+
+Create table students
+(aID			int			NOT NULL,
+userStudentID		int			NOT NULL UNIQUE,
+	 primary key (userStudentID),
+	 foreign key (aID) references users(aggieID)
+		on delete cascade
+);
+	
 	
 	create table schedules
-	(sID				int,
+	(scheduleID		int	NOT NULL UNIQUE,
 	 meetDate		date,
 	 meetTime		time,
 	 building		varchar(32),
 	 roomNumber	    varchar(10),
-	 primary key (sID)
+	 notes 		varchar(128),
+	 primary key (scheduleID)
 	);
+
 	
 	create table booking
-	(userID	int,
-	 scheduleID			int,
-	 BookDate		date,
-	 BookTime		time,
-	 primary key (userID, scheduleID),
-	 foreign key (userID) references users(uID)
+	(appointmentID			int 	NOT NULL UNIQUE,
+	userID						int,
+	tutorID					int,
+	scheduleingID			int,
+	BookDate				date,
+	BookTime				time,
+	primary key (appointmentID),
+	foreign key (userID) references students(userStudentID)
 		on delete cascade,
-	 foreign key (scheduleID) references schedules(sID)
+	foreign key (tutorID) references tutors(userTutorID)
+		on delete cascade,
+	 foreign key (scheduleingID) references schedules(scheduleID)
 		on delete cascade
 	);
