@@ -3,7 +3,7 @@
 ## Best practices for github:
 1. Create your own branch locally and push that branch to remote so that you have a private space to work in. DO NOT use a pre-existing branch. It creates major issues and has potential to delete work. This is also why we will never push directly to main. I will be putting a lock on the github to prevent pushing directly to main and all merge requests will need to be reviewed and authorized by someone else before merging.
 
-2. When creating branches checkout the main branch locally first (git checkout main), do git pull to update main, then 'git checkout -b new-branch-name'
+2. When creating branches checkout the main branch locally first (git checkout main), do "git pull" to update main, then 'git checkout -b new-branch-name'
 
 3. BEFORE PUSHING, do "git pull" to update your branch (pulling any changes made in the remote's main branch), then push. This avoids merge conflicts on the remote. If you get a local merge conflict, that's okay, it is better to resolve merge conflicts locally than remotely. Here is a guide on how to resolve merge conflicts: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line#further-reading">Resolving Merge Conflicts</a>
 
