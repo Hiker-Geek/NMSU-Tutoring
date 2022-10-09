@@ -53,7 +53,9 @@ const events = [
 const IndexPage = () => {
   const [newEvent, setNewEvent] = useState({title: "", start: "", end: ""})
   const [allEvents, setAllEvents] = useState(events)
-
+/*
+  * The following function allows event scheduling and alerts user when scheduling new events would overlap with pre-existing events
+*/
   function hnadleAddEvent() {
     for (let i=0; i<allEvents.length; i++){
 
@@ -73,7 +75,7 @@ const IndexPage = () => {
           (d4 <= d3) )
         )
       {   
-          alert("CLASH"); 
+          alert("New Event Overlaps Pre-existing events"); 
           break;
        }
 
@@ -91,7 +93,8 @@ const IndexPage = () => {
       /*
        * putting the calendar code inside the layout tag squashes it into a very small box when we want a big calendar
        * Layout will have to be modified later to accomodate a bigger calendar
-       * The first div after Layout closes is the form for creating events
+       * The first div after Layout closes is the form for creating events. Its included since it has potential to be
+       * the basis for students scheduling with tutors.
        * */}
       </Layout><div>
         <div className='App'>
