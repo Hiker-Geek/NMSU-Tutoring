@@ -1,36 +1,114 @@
 // Import React
 // MOST IMPORTANT STEP
-import * as React from 'react'
 // Reference layout from components to keep styling consistent
 import Layout from '../components/layout'
-// Reference mobiscroll for calendar widget
-import '@mobiscroll/react/dist/css/mobiscroll.min.css';
-import { Datepicker, Page, getJson, setOptions } from '@mobiscroll/react';
-
-// Sets theme for Calendar
-setOptions({
-  theme: 'windows',
-  themeVariant: 'light'
-});
+import '../App.css';
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import format from "date-fns/format";
+import parse from "date-fns/parse";
+import startOfWeek from 'date-fns/startOfWeek';
+import getDay from 'date-fns/getDay';
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 // Index Page component
 // I created this following only an example but this should be broken up by header,
 // content, navbar
 // * Need to implement by Sprint 2 *
+
+const locales = {
+  "en-US": require("date-fns/locale/en-US"),
+};
+
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales
+});
+//Developer's note: for the correct date and time dates must be string literals
+const events = [
+  {
+    title: "Tutoring Appointment",
+    start: new Date('2022-10-3 12:00'),
+    end: new Date('2022-10-3 13:00')
+  },
+  {
+    title: "School Holiday",
+    allDay: true,
+    start: new Date('2022-10-31 00:00'),
+    end: new Date('2022-10-31 23:59')
+  },
+  {
+    title: "Conference",
+    start: new Date('2022-10-3 09:00'),
+    end: new Date('2022-10-3 10:00')
+  },
+];
+
+
 const IndexPage = () => {
+  const [newEvent, setNewEvent] = useState({title: "", start: "", end: ""})
+  const [allEvents, setAllEvents] = useState(events)
+
+  function hnadleAddEvent() {
+    for (let i=0; i<allEvents.length; i++){
+
+      const d1 = new Date (allEvents[i].start);
+      const d2 = new Date(newEvent.start);
+      const d3 = new Date(allEvents[i].end);
+      const d4 = new Date(newEvent.end);
+/*
+    console.log(d1 <= d2);
+    console.log(d2 <= d3);
+    console.log(d1 <= d4);
+    console.log(d4 <= d3);
+      */
+
+       if (
+        ( (d1  <= d2) && (d2 <= d3) ) || ( (d1  <= d4) &&
+          (d4 <= d3) )
+        )
+      {   
+          alert("CLASH"); 
+          break;
+       }
+
+  }
+    setAllEvents([...allEvents, newEvent])
+  }
   return (
     // Layout tag is referencing layout.js component
     // This is done to keep styling of all components within the tag
     // consistent with what is set in layout.js
-    <Layout pageTitle="NMSU Tutor Schedular">
-      <p>Access the calendar below to create an appointment as well as see already scheduled appointments.</p>
-      {/* Inject mobiscroll calendar widget */}
-      <Datepicker
-        controls={['calendar']}
-        display="inline"
-        touchUi={false}
-      />
-    </Layout>
+    <>
+
+      <Layout pageTitle="NMSU Tutor Schedular">
+      {
+      /*
+       * putting the calendar code inside the layout tag squashes it into a very small box when we want a big calendar
+       * Layout will have to be modified later to accomodate a bigger calendar
+       * The first div after Layout closes is the form for creating events
+       * */}
+      </Layout><div>
+        <div className='App'>
+          <input type="text" placeholder="event name" id="inline-block"
+            value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
+          <DatePicker placeholderText='start date' id="inline-block"
+            selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
+          <DatePicker placeholderText='end date'
+            selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
+          <button id="inline-block" onClick={hnadleAddEvent}>Schedule Event</button>
+        </div>
+
+        <Calendar localizer={localizer} events={allEvents}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 600, margin: "50px" }} />
+      </div></>
   )
 }
 
