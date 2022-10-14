@@ -11,6 +11,7 @@ import {
   navLinkItem,
   navLinkText,
   navbar,
+  navcontainer,
 } from './layout.module.css'
 
 // Creates layout component (React component)

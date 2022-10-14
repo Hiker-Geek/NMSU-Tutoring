@@ -98,7 +98,7 @@ const IndexPage = () => {
             selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
           <DatePicker placeholderText='end date'
             selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
-          <button id="inline-block" onClick={hnadleAddEvent}>Schedule Event</button>
+          <button onClick={hnadleAddEvent}>Schedule Event</button>
           
 
         <Calendar localizer={localizer} events={allEvents}
