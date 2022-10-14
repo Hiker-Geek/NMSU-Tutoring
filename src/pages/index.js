@@ -2,7 +2,6 @@
 // MOST IMPORTANT STEP
 // Reference layout from components to keep styling consistent
 import Layout from '../components/layout'
-import '../App.css';
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
@@ -70,11 +69,7 @@ const IndexPage = () => {
     console.log(d4 <= d3);
       */
 
-       if (
-        ( (d1  <= d2) && (d2 <= d3) ) || ( (d1  <= d4) &&
-          (d4 <= d3) )
-        )
-      {   
+       if (( (d1  <= d2) && (d2 <= d3) ) || ( (d1  <= d4) && (d4 <= d3) )) {   
           alert("New Event Overlaps Pre-existing events"); 
           break;
        }
@@ -86,7 +81,7 @@ const IndexPage = () => {
     // Layout tag is referencing layout.js component
     // This is done to keep styling of all components within the tag
     // consistent with what is set in layout.js
-    <>
+    
 
       <Layout pageTitle="NMSU Tutor Schedular">
       {
@@ -96,8 +91,7 @@ const IndexPage = () => {
        * The first div after Layout closes is the form for creating events. Its included since it has potential to be
        * the basis for students scheduling with tutors.
        * */}
-      </Layout><div>
-        <div className='App'>
+      
           <input type="text" placeholder="event name" id="inline-block"
             value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
           <DatePicker placeholderText='start date' id="inline-block"
@@ -105,13 +99,14 @@ const IndexPage = () => {
           <DatePicker placeholderText='end date'
             selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
           <button id="inline-block" onClick={hnadleAddEvent}>Schedule Event</button>
-        </div>
+          
 
         <Calendar localizer={localizer} events={allEvents}
           startAccessor="start"
           endAccessor="end"
           style={{ height: 600, margin: "50px" }} />
-      </div></>
+      
+      </Layout>
   )
 }
 

@@ -1,21 +1,38 @@
 /* CSS is all entered here and then pulled/referenced within layout.js */
 .container {
     margin: auto;
-    max-width: 500px;
+    max-width: 100%;
+    max-height: 100%;
     font-family: sans-serif;
+    text-align: center;
   }
+.navbar {
+  position: absolute;
+  top:0px;
+  left:0px;
+  width: 100%;
+  max-height: 100px;
+  padding-left: 15px;
+  background-color: #8c0b42;
+  outline-color: #8c0b42;
+}
   
   .heading {
     color: rebeccapurple;
+    margin-top: 5%;
   }
   .nav-links {
     display: flex;
     list-style: none;
     padding-left: 0;
+    
   }
   .nav-link-item {
     padding-right: 2rem;
+    padding-left: 0;
+    margin: 0;
   }
   .nav-link-text {
-    color: black;
+    color: white;
+    text-decoration: none;
   }

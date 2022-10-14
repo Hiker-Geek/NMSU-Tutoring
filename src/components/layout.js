@@ -9,14 +9,16 @@ import {
   heading,
   navLinks,
   navLinkItem,
-  navLinkText
+  navLinkText,
+  navbar,
 } from './layout.module.css'
 
 // Creates layout component (React component)
 const Layout = ({ pageTitle, children }) => {
   return (
     <div className={container}>
-      <nav>
+      <div>
+      <nav className={navbar}>
         <ul className={navLinks}>
           <li className={navLinkItem}>
             <Link to="/" className={navLinkText}>
@@ -30,6 +32,7 @@ const Layout = ({ pageTitle, children }) => {
           </li>
         </ul>
       </nav>
+      </div>
       <main>
         <h1 className={heading}>{pageTitle}</h1>
         {children}
