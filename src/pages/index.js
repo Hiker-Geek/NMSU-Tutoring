@@ -11,6 +11,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./pages.css";
 
 // Index Page component
 // I created this following only an example but this should be broken up by header,
@@ -92,11 +93,11 @@ const IndexPage = () => {
        * the basis for students scheduling with tutors.
        * */}
       
-          <input type="text" placeholder="event name" id="inline-block"
+          <input type="text" placeholder="event name" className='inputs'
             value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
-          <DatePicker placeholderText='start date' id="inline-block"
+          <DatePicker placeholderText='start date' className='inputs'
             selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
-          <DatePicker placeholderText='end date'
+          <DatePicker placeholderText='end date' className='inputs'
             selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
           <button onClick={hnadleAddEvent}>Schedule Event</button>
           
