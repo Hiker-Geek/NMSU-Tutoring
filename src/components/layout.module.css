@@ -7,14 +7,15 @@
     text-align: center;
   }
 .navbar {
-  position: absolute;
+  position: fixed;
   top:0px;
   left:0px;
   width: 100%;
-  max-height: 100px;
-  padding-left: 15px;
+  height: 50px;
+  padding-left: 3%;
   background-color: #8c0b42;
   outline-color: #8c0b42;
+  z-index: +1;
 }
   
   .heading {
@@ -35,4 +36,5 @@
   .nav-link-text {
     color: white;
     text-decoration: none;
+    font-weight: bold;
   }
