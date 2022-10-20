@@ -42,7 +42,7 @@ const events = [
   },
 ];
 
-function myCalendar() {
+function MyCalendar() {
   const [newEvent, setNewEvent] = useState({title: "", start: "", end: ""})
   const [allEvents, setAllEvents] = useState(events)
 
@@ -101,4 +101,4 @@ function myCalendar() {
   );
 }
 
-export default myCalendar;
+export default MyCalendar;
