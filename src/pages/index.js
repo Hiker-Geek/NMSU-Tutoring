@@ -9,9 +9,9 @@ import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DateTimePicker from 'react-datetime-picker';
 import "./pages.css";
+import TimePicker from '../components/TimePicker';
 
 // Index Page component
 // I created this following only an example but this should be broken up by header,
@@ -92,14 +92,17 @@ const IndexPage = () => {
        * The first div after Layout closes is the form for creating events. Its included since it has potential to be
        * the basis for students scheduling with tutors.
        * */}
-      
+          <h3>Event:&ensp;</h3>
           <input type="text" placeholder="event name" className='inputs'
             value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
-          <DatePicker placeholderText='start date' className='inputs'
-            selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
-          <DatePicker placeholderText='end date' className='inputs'
-            selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
-          <button onClick={hnadleAddEvent}>Schedule Event</button>
+          <br/><h3>Start:&ensp;</h3>
+          <DateTimePicker placeholderText='start date' className='inputs' 
+            selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} disableClock='true'/>
+          <br/><h3>End:&ensp;</h3>
+          <DateTimePicker placeholderText='end date' className='inputs'
+            selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} disableClock='true'/>
+          <TimePicker/>
+          <br/><button onClick={hnadleAddEvent}>Schedule Event</button>
           
 
         <Calendar localizer={localizer} events={allEvents}
