@@ -1,4 +1,4 @@
-function Activate() {
+function activate() {
 	document.head.insertAdjacentHTML("beforeend", `
 		<style>
 			.time-picker {
@@ -133,5 +133,3 @@ function numberToOption(number) {
 
 	return `<option value="${padded}">${padded}</option>`;
 }
-
-export default Activate;
