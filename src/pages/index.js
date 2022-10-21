@@ -9,11 +9,9 @@ import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import React, { useState } from "react";
-import DateTimePicker from 'react-datetime-picker';
-//import DatePicker from 'react-datepicker';
-//import 'boostrap/dist/css/boostrap.min.css';
+import DatePicker, { CalendarContainer } from 'react-datepicker';
 import "./pages.css";
-//import TimePicker from '../components/TimePicker';
+import { fixed } from 'gatsby-plugin-sharp';
 
 // Index Page component
 // I created this following only an example but this should be broken up by header,
@@ -35,8 +33,8 @@ const localizer = dateFnsLocalizer({
 const events = [
   {
     title: "Tutoring Appointment",
-    start: new Date('2022-10-3 12:00'),
-    end: new Date('2022-10-3 13:00')
+    start: new Date('2022-10-21 12:00'),
+    end: new Date('2022-10-21 13:00')
   },
   {
     title: "School Holiday",
@@ -46,25 +44,41 @@ const events = [
   },
   {
     title: "Conference",
-    start: new Date('2022-10-3 09:00'),
-    end: new Date('2022-10-3 10:00')
+    start: new Date('2022-10-24 14:00'),
+    end: new Date('2022-10-26 16:00')
+  },
+  {
+    title: "brunch",
+    start: new Date('2022-10-21 10:00'),
+    end: new Date('2022-10-21 11:00')
   },
 ];
 
 
 const IndexPage = () => {
-  const [newEvent, setNewEvent] = useState({title: "", start: "", end: ""})
+  const [newEvent, setNewEvent] = useState({title: "", start: new Date(), end: new Date()})
   const [allEvents, setAllEvents] = useState(events)
 /*
   * The following function allows event scheduling and alerts user when scheduling new events would overlap with pre-existing events
 */
-  function hnadleAddEvent() {
+  function handleAddEvent() {
     for (let i=0; i<allEvents.length; i++){
 
-      const d1 = new Date (allEvents[i].start);
+      const d1 = new Date(allEvents[i].start);
       const d2 = new Date(newEvent.start);
       const d3 = new Date(allEvents[i].end);
       const d4 = new Date(newEvent.end);
+      const diffTime = Math.abs(d4 - d2);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      const today = new Date();
+      const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      const time = today.getHours() + ":" + today.getMinutes();
+      const add = date+' '+time;
+      const dateTime = new Date(add);
+
+     // const diffTime2 = Math.abs(dateTime - d2);
+     // const diffDay2 = Math.ceil(diffTime2 / (1000 * 60 * 60 * 24));
 /*
     console.log(d1 <= d2);
     console.log(d2 <= d3);
@@ -72,13 +86,24 @@ const IndexPage = () => {
     console.log(d4 <= d3);
       */
 
-       if (( (d1  <= d2) && (d2 <= d3) ) || ( (d1  <= d4) && (d4 <= d3) )) {   
-          alert("New Event Overlaps Pre-existing events"); 
+//this collision checking doesn't work for some reason
+       if ((( (d1  <= d2) && (d2 <= d3) ) || ( (d1  <= d4) && (d4 <= d3) )) || (d2 <= dateTime) || (1 < diffDays)) {   
+          alert("Invalid--choose a date in the future that hasn't been taken");
           break;
        }
+      /* if(d2 <= dateTime){
+        alert("You can't schedule events in the past");
+        break;
+       } 
+       if((1 < diffDays)){
+        alert("You can't make multi-day appointments");
+        break;
+       } */
+       else{
+        setAllEvents([...allEvents, newEvent]);
+       }
 
-  }
-    setAllEvents([...allEvents, newEvent])
+    }
   }
   return (
     // Layout tag is referencing layout.js component
@@ -87,30 +112,43 @@ const IndexPage = () => {
     
 
       <Layout pageTitle="NMSU Tutor Schedular">
-      {
-      /*
-       * putting the calendar code inside the layout tag squashes it into a very small box when we want a big calendar
-       * Layout will have to be modified later to accomodate a bigger calendar
-       * The first div after Layout closes is the form for creating events. Its included since it has potential to be
-       * the basis for students scheduling with tutors.
-       * */}
-          <h3>Event:&ensp;</h3>
-          <input type="text" placeholder="event name" className='inputs'
-            value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
-          <br/><h3>Start:&ensp;</h3>
-          <DateTimePicker placeholderText='start date' className='inputs' 
-            selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} disableClock='true'/>
-          <br/><h3>End:&ensp;</h3>
-          <DateTimePicker placeholderText='end date'  
-            selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} disableClock='true'/>
-          <br/><button onClick={hnadleAddEvent}>Schedule Event</button>
-          
-
+       <div className='scheduling-form'>
+          <div><h3>Student Name:</h3><br/>
+          <input type="text" placeholder="first and last name" 
+            value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />&ensp;&ensp;
+          </div>
+          <div>
+          <h3>Start:</h3>
+          <DatePicker 
+          placeholderText='start date/time'  
+            selected={newEvent.start} 
+            onChange={(start) => setNewEvent({ ...newEvent, start })}
+            showTimeSelect
+            timeIntervals={15}
+            timeCaption="time"
+            dateFormat="MMMM d, yyyy h:mm aa" />
+          </div>
+          <div>
+          <h3>End:</h3>
+          <DatePicker 
+          placeholderText='end date/time'  
+            selected={newEvent.end} 
+            onChange={(end) => setNewEvent({ ...newEvent, end })}
+            showTimeSelect
+            timeIntervals={15}
+            timeCaption="time"
+            dateFormat="MMMM d, yyyy h:mm aa"
+            style={{  }}
+            />
+          </div>
+      </div>   
+      <button class='button' onClick={handleAddEvent}>Schedule</button>
+      <div style={{ height: "90%", width: "90%", 'margin-left': "5%", 'font-size': "18px", position: 'absolute', zIndex: '-1', alignContent:'center'}}>
         <Calendar localizer={localizer} events={allEvents}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 600, margin: "50px" }} />
-      
+          style={{'padding': '50px'}}/>
+      </div>  
       </Layout>
   )
 }

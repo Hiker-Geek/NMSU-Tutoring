@@ -1,9 +1,47 @@
 .inputs{
     margin-bottom: 5px;
+    display: inline;
 }
 
-#ui-datepicker-div{left: 50%; margin-left: -25.5em;}
+input{
+    width: 250px;
+    height: 25px;
+    text-align: center;
+    font-size: 16px;
+}
+
 h3{
     display: inline-block;
     margin: 5px
+}
+
+.react-datepicker-popper {
+    position: fixed;
+    z-index: +1;
+}
+
+.scheduling-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 15px;
+    background-color: white;
+}
+
+.scheduling-containers{
+    display: inline;
+}
+
+.button{
+    background-color: #454545; 
+    border: none;
+    border-radius: 10px;
+    padding: 12px 52px;
+    margin: 4px;
+    max-height: min-content;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
 }
