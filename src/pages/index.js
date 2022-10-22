@@ -47,11 +47,6 @@ const events = [
     start: new Date('2022-10-24 14:00'),
     end: new Date('2022-10-26 16:00')
   },
-  {
-    title: "brunch",
-    start: new Date('2022-10-21 10:00'),
-    end: new Date('2022-10-21 11:00')
-  },
 ];
 
 
@@ -90,9 +85,20 @@ function dateCollision(){
       const today = new Date();
       const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+2);
       const dateTime = new Date(date);
+      const myString = "INVALID!\n\n" +
+                       "Scheduling rules are as follows:\n" +
+                       "- No multiday appointments.\n" +
+                       "- Must Schedule 2 days in advance\n" +
+                       "- No double booking\n" +
+                       "- Schedule meetings in 15 minute increments only"
 
-       if ((newEventStart <= dateTime) || (1 < diffDays) || dateCollision()) {   
-          alert("INVALID!\n\nScheduling rules are as follows:\n- No multiday appointments.\n- Must Schedule 2 days in advance\n- No double booking");
+       if ((newEventStart <= dateTime) || 
+           (1 < diffDays) ||
+           dateCollision() ||
+           (newEvent.start.getMinutes() % 15 !== 0) ||
+           (newEvent.end.getMinutes() % 15 !== 0)) 
+       {   
+          alert(myString);
        }
        else{
         setAllEvents([...allEvents, newEvent]);
