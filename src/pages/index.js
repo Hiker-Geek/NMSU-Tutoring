@@ -45,7 +45,7 @@ const events = [
   {
     title: "Conference",
     start: new Date('2022-10-24 14:00'),
-    end: new Date('2022-10-26 16:00')
+    end: new Date('2022-10-24 16:00')
   },
 ];
 
@@ -109,8 +109,6 @@ function dateCollision(){
     // Layout tag is referencing layout.js component
     // This is done to keep styling of all components within the tag
     // consistent with what is set in layout.js
-    
-
       <Layout pageTitle="NMSU Tutor Schedular">
        <div className='scheduling-form'>
           <div><h3>Student Name:</h3><br/>
@@ -141,8 +139,8 @@ function dateCollision(){
             />
           </div>
       </div>   
-      <button class='button' onClick={handleAddEvent}>Schedule</button>
-      <div style={{ height: "90%", width: "90%", 'margin-left': "5%", 'font-size': "15px", position: 'absolute', zIndex: '-1', alignContent:'center'}}>
+      <button className='button' onClick={handleAddEvent}>Schedule</button>
+      <div style={{ height: "90%", width: "90%", marginLeft: "5%", fontSize: "15px", position: 'absolute', zIndex: '-1', alignContent:'center'}}>
         <Calendar localizer={localizer} events={allEvents}
           startAccessor="start"
           endAccessor="end"
