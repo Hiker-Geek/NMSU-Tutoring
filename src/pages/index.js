@@ -45,7 +45,7 @@ const events = [
   {
     title: "Conference",
     start: new Date('2022-10-24 14:00'),
-    end: new Date('2022-10-26 16:00')
+    end: new Date('2022-10-24 16:00')
   },
 ];
 
