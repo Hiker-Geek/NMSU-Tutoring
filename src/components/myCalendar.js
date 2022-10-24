@@ -22,6 +22,7 @@ const localizer = dateFnsLocalizer({
   getDay,
   locales
 });
+
 //Developer's note: for the correct date and time dates must be string literals
 const events = [
   {
