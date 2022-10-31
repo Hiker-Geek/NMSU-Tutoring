@@ -5,6 +5,14 @@ module.exports = {
   },
   plugins: [
     "gatsby-plugin-image",
-    "gatsby-plugin-sharp"
+    "gatsby-plugin-sharp",
+    {
+      resolve: "gatsby-source-pg",
+      options: {
+        connectionString: "postgres://postgres:scarythings@localhost:5432",
+        schema: "public",
+        refetchInterval: 60
+      }
+    }
   ],
 }
