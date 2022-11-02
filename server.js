@@ -81,17 +81,32 @@ app.get('/api/studentDetails/:studentId', async (req, res, next) => {
 //Used to get all the available calendar appointments that have not been taken.
 //Example: http://localhost:8000/api/listSchedules
 app.get('/api/listSchedules', async (req, res, next) => {
-    try {
-        const scheduleDetails = await tutorDB("tutors as t")
-            .join('schedules as s', 's.scheduledTutorID', '=', 't.userTutorID')
-            .select(['t.subject', 's.meetTime', 's.endTime', 's.building', 's.roomnumber', 's.notes'])
-        const scheduleNames = await tutorDB("users as u")
-            .join('tutors as t', 't.aID', '=', 'u.aggieID')
-            .select(['u.firstName', 'u.lastname'])
-        const fullQuery = {
-            ...scheduleNames[0],
-            ...scheduleDetails[0]
-        }
+    try {//TODO: Needs work.
+        // const scheduleDetails = await tutorDB("tutors as t")//left join
+        //     .join('schedules as s', 's.scheduledTutorID', '=', 't.userTutorID')
+        //     .select(['t.subject', 's.meetTime', 's.endTime', 's.building', 's.roomnumber', 's.notes'])
+        // const scheduleNames = await tutorDB("users as u")
+        //     .join('tutors as t', 't.aID', '=', 'u.aggieID')
+        //     .select(['u.firstName', 'u.lastname'])
+        // const fullQuery = {
+        //     ...scheduleNames[0],
+        //     ...scheduleDetails[0]
+        // }
+        const fullQuery = [{
+            tutorFirstName: 'Bill',
+            tutorLastName: 'Bo',
+            meetTime: '2022-11-13 11:30:00',
+            endTime: '2022-11-13 12:30:00',
+            building: 'Science Hall',
+            notes: 'Be there.'
+        }, {
+            tutorFirstName: 'Michael',
+            tutorLastName: 'Jackson',
+            meetTime: '2022-11-12 10:30:00',
+            endTime: '2022-11-12 11:00:00',
+            building: 'Science Hall',
+            notes: 'Hi.'
+        }];
         res.json(fullQuery);
     } catch (error) {
         console.log(error);
