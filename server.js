@@ -8,14 +8,12 @@ const staticSite = __dirname + '/public';
 app.use(express.json());
 app.use(express.static(staticSite));
 
-//TODO: OpenAPI
-
-// const apiSpec = path.join(__dirname, 'OpenAPI.yaml');
-// app.use(OpenApiValidator.middleware({
-//         apiSpec,
-//         validateResponses: true, // default false
-//     }),
-// );
+const apiSpec = path.join(__dirname, 'OpenAPI.yaml');
+app.use(OpenApiValidator.middleware({
+        apiSpec,
+        validateResponses: false,
+    }),
+);
 
 app.get('/', function (req, res) {
     res.sendFile(staticSite + "/index.html");
@@ -47,14 +45,13 @@ app.get('/api/userDetails/:aggieID', async (req, res, next) => {
 });
 
 //Used to get a tutors' information for checking their profile.
-//Example: http://localhost:8000/api/tutorDetails/1
-app.get('/api/tutorDetails/:tutorId', async (req, res, next) => {
+//Example: http://localhost:8000/api/tutorDetails/493458463
+app.get('/api/tutorDetails/:aggieId', async (req, res, next) => {
     try {
-        const userTutorID = req.params.tutorId;
+        const userAggieId = req.params.aggieId;
         const scheduleDetails = await tutorDB("users as u")
-            .join('tutors as t', 't.aID', '=', 'u.aggieID')
-            .select(['u.firstName', 'u.lastname', 'u.email', 'u.gender', 'u.bio', 't.subject', 't.deptID'])
-            .where('t.userTutorID', `${userTutorID}`);
+            .select(['u.firstName', 'u.lastname', 'u.email', 'u.gender', 'u.bio', 'u.subject', 'u.deptID'])
+            .where('u.aggieID', `${userAggieId}`);
         res.json(scheduleDetails);
     } catch (error) {
         console.log(error);
@@ -63,15 +60,14 @@ app.get('/api/tutorDetails/:tutorId', async (req, res, next) => {
 });
 
 //Used to get a students' information for checking their profile.
-//Example: http://localhost:8000/api/studentDetails/1
-app.get('/api/studentDetails/:studentId', async (req, res, next) => {
+//Example: http://localhost:8000/api/studentDetails/478214179
+app.get('/api/studentDetails/:aggieID', async (req, res, next) => {
     try {
-        const userStudentID = req.params.studentId;
-        const scheduleDetails = await tutorDB("users as u")
-            .join('students as s', 's.aID', '=', 'u.aggieID')
+        const userStudentID = req.params.aggieID;
+        const studentDetails = await tutorDB("users as u")
             .select(['u.firstName', 'u.lastname', 'u.email', 'u.gender', 'u.bio'])
-            .where('s.userStudentID', `${userStudentID}`);
-        res.json(scheduleDetails);
+            .where('u.aggieID', `${userStudentID}`);
+        res.json(studentDetails);
     } catch (error) {
         console.log(error);
         next(error);
@@ -81,33 +77,13 @@ app.get('/api/studentDetails/:studentId', async (req, res, next) => {
 //Used to get all the available calendar appointments that have not been taken.
 //Example: http://localhost:8000/api/listSchedules
 app.get('/api/listSchedules', async (req, res, next) => {
-    try {//TODO: Needs work.
-        // const scheduleDetails = await tutorDB("tutors as t")//left join
-        //     .join('schedules as s', 's.scheduledTutorID', '=', 't.userTutorID')
-        //     .select(['t.subject', 's.meetTime', 's.endTime', 's.building', 's.roomnumber', 's.notes'])
-        // const scheduleNames = await tutorDB("users as u")
-        //     .join('tutors as t', 't.aID', '=', 'u.aggieID')
-        //     .select(['u.firstName', 'u.lastname'])
-        // const fullQuery = {
-        //     ...scheduleNames[0],
-        //     ...scheduleDetails[0]
-        // }
-        const fullQuery = [{
-            tutorFirstName: 'Bill',
-            tutorLastName: 'Bo',
-            meetTime: '2022-11-13 11:30:00',
-            endTime: '2022-11-13 12:30:00',
-            building: 'Science Hall',
-            notes: 'Be there.'
-        }, {
-            tutorFirstName: 'Michael',
-            tutorLastName: 'Jackson',
-            meetTime: '2022-11-12 10:30:00',
-            endTime: '2022-11-12 11:00:00',
-            building: 'Science Hall',
-            notes: 'Hi.'
-        }];
-        res.json(fullQuery);
+    try {
+        const schedule = await tutorDB.select(['FirstName', 'LastName', 'DeptID', 'Subject', 'meetTime', 'endTime', 'building', 'roomNumber', 'notes', 'email'])
+            .from('schedules')
+            .leftOuterJoin('booking', 'schedules.scheduleID', 'booking.schedulingID')
+            .join('users', 'users.aggieID', 'schedules.scheduledTutorID')
+            .where("booking.appointmentID", "is", null);
+        res.json(schedule);
     } catch (error) {
         console.log(error);
         next(error);
@@ -115,33 +91,21 @@ app.get('/api/listSchedules', async (req, res, next) => {
 });
 
 //Used to get the information for all the appointments you have booked with any tutor. All you need is that students aggieID
-//Example:
-// app.get('/api/listBookings/:aggieId', async (req, res, next) => {
-//     try {//TODO: Needs work.
-//         const theirBookings = req.params.aggieId;
-//        const bookingData = await tutorDB.raw('select u.firstname, u.lastname, u.email, u.gender, t.deptId, t.subject, s.meetTime, s.endTime, s.building, s.roomnumber, s.notes' +
-//             'from users AS u, tutors AS t, schedules AS s, booking AS b' +
-//             'where u.aggieID = ' + `${theirBookings} AND` + ' b.studentAggieID = u.aggieID AND b.tutorAggieID = t.aID AND b.appointmentID = s.scheduleID');
-//         // const userTutorDetails = await tutorDB("users as u")
-//         //     .join('booking as b', 'b.studentAggieID', '=', 'u.aggieID')
-//         //     .select(['u.firstname', 'u.lastname','u.email','u.gender'])
-//         // const tutorInfo = await tutorDB("tutors as t")
-//         //     .join('booking as b', 'b.tutorID', '=', 't.userTutorID')
-//         //     .select(['t.deptId', 't.subject'])
-//         // const getSchedule = await tutorDB("schedules as s")
-//         //     .join('booking as b', 'b.appointmentID', '=', 's.scheduleID')
-//         //     .select(['s.meetTime', 's.endTime', 's.building', 's.roomnumber', 's.notes']);
-//         // const fullQuery = {
-//         //     ...userTutorDetails[0],
-//         //     ...tutorInfo[0],
-//         //     ...getSchedule[0]
-//         // }
-//         res.json(bookingData);
-//     } catch (error) {
-//         console.log(error);
-//         next(error);
-//     }
-// });
+//Example: http://localhost:8000/api/listBookings/478214179
+app.get('/api/listBookings/:aggieId', async (req, res, next) => {
+    try {
+        const studentAggieId = req.params.aggieId;
+        const bookingData = await tutorDB.select(['FirstName', 'LastName', 'DeptID', 'Subject', 'meetTime', 'endTime', 'building', 'roomNumber', 'notes', 'email'])
+            .from('booking')
+            .join('users', 'users.aggieID', 'booking.tutorAggieID')
+            .join('schedules', 'schedules.scheduleID', 'booking.schedulingID')
+            .where("booking.studentAggieID", "=", studentAggieId);
+        res.json(bookingData);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
 
 app.listen(8000, () => console.log('Tutoring Dashboard is up.'));
 module.exports = app;
