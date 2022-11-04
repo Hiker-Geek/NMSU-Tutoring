@@ -11,7 +11,7 @@ app.use(express.static(staticSite));
 const apiSpec = path.join(__dirname, 'OpenAPI.yaml');
 app.use(OpenApiValidator.middleware({
         apiSpec,
-        validateResponses: false,
+        validateResponses: true,
     }),
 );
 
