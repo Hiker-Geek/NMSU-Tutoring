@@ -33,28 +33,31 @@ userStudentID		int			NOT NULL UNIQUE,
 	
 	
 	create table schedules
-	(scheduleID		int	NOT NULL UNIQUE,
-	 meetDate		date,
-	 meetTime		time,
-	 building		varchar(32),
-	 roomNumber	    varchar(10),
-	 notes 		varchar(128),
-	 primary key (scheduleID)
-	);
+    (scheduleID		int	NOT NULL UNIQUE,
+     scheduledTutorID  int,
+     meetTime       dateTime NOT NULL,
+     endTime        dateTime,
+     building		varchar(32),
+     roomNumber	    varchar(10),
+     notes 		varchar(128),
+     primary key (scheduleID)
+         foreign key (scheduledTutorID) references tutors(userTutorID)
+         on delete cascade
+    );
 
 	
 	create table booking
 	(appointmentID			int 	NOT NULL UNIQUE,
-	userID						int,
-	tutorID					int,
-	scheduleingID			int,
+	studentAggieID			int,
+	tutorAggieID			int,
+	schedulingID			int,
 	BookDate				date,
 	BookTime				time,
 	primary key (appointmentID),
-	foreign key (userID) references students(userStudentID)
+	foreign key (studentAggieID) references users(aggieID)
 		on delete cascade,
-	foreign key (tutorID) references tutors(userTutorID)
+	foreign key (tutorAggieID) references tutors(aggieID)
 		on delete cascade,
-	 foreign key (scheduleingID) references schedules(scheduleID)
+	 foreign key (schedulingID) references schedules(scheduleID)
 		on delete cascade
 	);

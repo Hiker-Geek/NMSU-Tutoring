@@ -1,0 +1,241 @@
+openapi: '3.0.0'
+info:
+  title: Open-API for project express server
+  description: Open-API for project express server
+  version: 1.0.0
+servers:
+  - url: /
+    description: All localhost enpoints.
+paths:
+  /api/listSchedules:
+    get:
+      description: Get all the schedules for the library.
+      responses:
+        '200':
+          description: Successful get of tutor schedules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    FirstName:
+                      type: string
+                      example: Bob
+                    lastName:
+                      type: string
+                      example: Marley
+                    DeptID:
+                      type: integer
+                      example: 843568
+                    subject:
+                      type: string
+                      example: Music
+                    meetTime:
+                      type: string
+                     # format: date-time
+                      example: 2022-11-12 13:30:00
+                    endTime:
+                      type: string
+                     # format: date-time
+                      example: 2022-11-12 14:30:00
+                    building:
+                      type: string
+                      example: Science Hall
+                    roomNumber:
+                      type: string
+                      example: SH-118
+                    notes:
+                      type: string
+                      example: Please show up five minutes early.
+                    email:
+                      type: string
+                      format: email
+                      example: bobmarley@nmsu.edu
+        default:
+          description: unexpected error
+
+  /api/listBookings/{aggieId}:
+    get:
+      description: Get all the schedules for the library.
+      parameters:
+      - name: aggieId
+        in: path
+        required: true
+        description: Bookings for a specific user.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful get of a users appointments.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    FirstName:
+                      type: string
+                      example: Bob
+                    lastName:
+                      type: string
+                      example: Marley
+                    DeptID:
+                      type: integer
+                      example: 843568
+                    Subject:
+                      type: string
+                      example: Music
+                    meetTime:
+                      type: string
+                     # format: date-time
+                      example: 2022-11-12 13:30:00
+                    endTime:
+                      type: string
+                   #   format: date-time
+                      example: 2022-11-12 14:30:00
+                    building:
+                      type: string
+                      example: Science Hall
+                    roomNumber:
+                      type: string
+                      example: SH-118
+                    notes:
+                      type: string
+                      example: Please show up five minutes early.
+                    email:
+                      type: string
+                      format: email
+                      example: bobmarley@nmsu.edu
+        default:
+          description: unexpected error
+
+  /api/userDetails/{aggieID}:
+    get:
+      description: Get a specific users data.
+      parameters:
+        - name: aggieID
+          in: path
+          required: true
+          description: Specific user details.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful get of a users data.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    FirstName:
+                      type: string
+                      example: Bob
+                    lastName:
+                      type: string
+                      example: Marley
+                    birthdate:
+                      type: string
+                      format: date
+                      example: 2000-12-31
+                    email:
+                      type: string
+                      format: email
+                      example: bobmarley@nmsu.edu
+                    role:
+                      type: string
+                      example: T
+                    gender:
+                      type: string
+                      example: M
+                    bio:
+                      type: string
+                      example: I like math.
+                    Subject:
+                      type: string
+                      example: Music
+        default:
+          description: unexpected error
+
+  /api/tutorDetails/{aggieID}:
+    get:
+      description: Get a specific tutors data.
+      parameters:
+        - name: aggieID
+          in: path
+          required: true
+          description: Specific tutor.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful get of a tutors data.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    firstName:
+                      type: string
+                      example: Bob
+                    lastName:
+                      type: string
+                      example: Marley
+                    email:
+                      type: string
+                      format: email
+                      example: bobmarley@nmsu.edu
+                    gender:
+                      type: string
+                      example: M
+                    bio:
+                      type: string
+                      example: I like math.
+                    subject:
+                      type: string
+                      example: Music
+                    deptID:
+                      type: integer
+                      example: 546462
+        default:
+          description: unexpected error
+
+  /api/studentDetails/{aggieID}:
+    get:
+      description: Get a specific students data.
+      parameters:
+        - name: aggieID
+          in: path
+          required: true
+          description: Specific student.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful get of a students data.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    firstName:
+                      type: string
+                      example: Bob
+                    lastName:
+                      type: string
+                      example: Marley
+                    email:
+                      type: string
+                      format: email
+                      example: bobmarley@nmsu.edu
+                    gender:
+                      type: string
+                      example: M
+                    bio:
+                      type: string
+                      example: I like math.
+        default:
+          description: unexpected error
