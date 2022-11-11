@@ -9,9 +9,9 @@ import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import React, { useState } from "react";
-import DatePicker, { CalendarContainer } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 import "./pages.css";
-import { fixed } from 'gatsby-plugin-sharp';
+//import { fixed } from 'gatsby-plugin-sharp';
 
 // Index Page component
 // I created this following only an example but this should be broken up by header,
@@ -45,12 +45,7 @@ const events = [
   {
     title: "Conference",
     start: new Date('2022-10-24 14:00'),
-    end: new Date('2022-10-26 16:00')
-  },
-  {
-    title: "brunch",
-    start: new Date('2022-10-21 10:00'),
-    end: new Date('2022-10-21 11:00')
+    end: new Date('2022-10-24 16:00')
   },
 ];
 
@@ -61,56 +56,59 @@ const IndexPage = () => {
 /*
   * The following function allows event scheduling and alerts user when scheduling new events would overlap with pre-existing events
 */
-  function handleAddEvent() {
-    for (let i=0; i<allEvents.length; i++){
 
-      const d1 = new Date(allEvents[i].start);
-      const d2 = new Date(newEvent.start);
-      const d3 = new Date(allEvents[i].end);
-      const d4 = new Date(newEvent.end);
-      const diffTime = Math.abs(d4 - d2);
+
+function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
+  if ((a_start < b_start && b_start < a_end) || (a_start < b_end   && b_end   < a_end) || (b_start <  a_start && a_end   <  b_end)) return true; // a in b
+  return false;
+}
+function dateCollision(){
+  for (let i=0; i<allEvents.length; i++){
+    const allEventStart = new Date(allEvents[i].start);
+    const newEventStart = new Date(newEvent.start);
+    const allEventEnd = new Date(allEvents[i].end);
+    const newEventEnd = new Date(newEvent.end);
+    if(dateRangeOverlaps(newEventStart, newEventEnd, allEventStart, allEventEnd)){ 
+      return true; 
+    }
+  }
+  return false;
+}
+
+  function handleAddEvent() {
+
+      const newEventStart = new Date(newEvent.start);
+      const newEventEnd = new Date(newEvent.end);
+      const diffTime = Math.abs(newEventEnd - newEventStart);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
       const today = new Date();
-      const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      const time = today.getHours() + ":" + today.getMinutes();
-      const add = date+' '+time;
-      const dateTime = new Date(add);
+      const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+2);
+      const dateTime = new Date(date);
+      const myString = "INVALID!\n\n" +
+                       "Scheduling rules are as follows:\n" +
+                       "- No multiday appointments.\n" +
+                       "- Must Schedule 2 days in advance\n" +
+                       "- No double booking\n" +
+                       "- Schedule meetings in 15 minute increments only"
 
-     // const diffTime2 = Math.abs(dateTime - d2);
-     // const diffDay2 = Math.ceil(diffTime2 / (1000 * 60 * 60 * 24));
-/*
-    console.log(d1 <= d2);
-    console.log(d2 <= d3);
-    console.log(d1 <= d4);
-    console.log(d4 <= d3);
-      */
-
-//this collision checking doesn't work for some reason
-       if ((( (d1  <= d2) && (d2 <= d3) ) || ( (d1  <= d4) && (d4 <= d3) )) || (d2 <= dateTime) || (1 < diffDays)) {   
-          alert("Invalid--choose a date in the future that hasn't been taken");
-          break;
+       if ((newEventStart <= dateTime) || 
+           (1 < diffDays) ||
+           dateCollision() ||
+           (newEvent.start.getMinutes() % 15 !== 0) ||
+           (newEvent.end.getMinutes() % 15 !== 0)) 
+       {   
+          alert(myString);
        }
-      /* if(d2 <= dateTime){
-        alert("You can't schedule events in the past");
-        break;
-       } 
-       if((1 < diffDays)){
-        alert("You can't make multi-day appointments");
-        break;
-       } */
        else{
         setAllEvents([...allEvents, newEvent]);
        }
-
-    }
+    
   }
   return (
     // Layout tag is referencing layout.js component
     // This is done to keep styling of all components within the tag
     // consistent with what is set in layout.js
-    
-
       <Layout pageTitle="NMSU Tutor Schedular">
        <div className='scheduling-form'>
           <div><h3>Student Name:</h3><br/>
@@ -136,14 +134,13 @@ const IndexPage = () => {
             onChange={(end) => setNewEvent({ ...newEvent, end })}
             showTimeSelect
             timeIntervals={15}
-            timeCaption="time"
+            timeCaption="Time"
             dateFormat="MMMM d, yyyy h:mm aa"
-            style={{  }}
             />
           </div>
       </div>   
-      <button class='button' onClick={handleAddEvent}>Schedule</button>
-      <div style={{ height: "90%", width: "90%", 'margin-left': "5%", 'font-size': "18px", position: 'absolute', zIndex: '-1', alignContent:'center'}}>
+      <button className='button' onClick={handleAddEvent}>Schedule</button>
+      <div style={{ height: "90%", width: "90%", marginLeft: "5%", fontSize: "15px", position: 'absolute', zIndex: '-1', alignContent:'center'}}>
         <Calendar localizer={localizer} events={allEvents}
           startAccessor="start"
           endAccessor="end"

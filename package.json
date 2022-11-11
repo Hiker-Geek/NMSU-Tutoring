@@ -8,6 +8,8 @@
     "gatsby"
   ],
   "scripts": {
+    "test": "jest",
+    "start-express" : "node server.js",
     "start": "npm start",
     "build": "gatsby build",
     "serve": "gatsby serve",
@@ -16,10 +18,15 @@
   "dependencies": {
     "boostrap": "^2.0.0",
     "date-fns": "^2.29.3",
+    "express": "^4.18.2",
+    "express-openapi-validator": "^4.13.8",
     "gatsby": "^4.24.0",
     "gatsby-plugin-image": "^2.24.0",
     "gatsby-plugin-sharp": "^4.24.0",
     "gatsby-source-filesystem": "^4.24.0",
+    "gatsby-source-pg": "^1.0.0-rc.0",
+    "jest": "^29.2.2",
+    "knex": "^2.3.0",
     "moment": "^2.29.4",
     "react": "^18.1.0",
     "react-big-calendar": "^1.5.0",
@@ -27,6 +34,11 @@
     "react-datetime-picker": "^4.0.1",
     "react-dom": "^18.1.0",
     "react-moment": "^1.1.2",
+<<<<<<< HEAD
     "zlib": "^1.0.5"
+=======
+    "sqlite3": "^5.1.2",
+    "supertest": "^6.3.1"
+>>>>>>> 0ab13f00fa65eb5f2c27f745a9c37f9cb19f20a7
   }
 }

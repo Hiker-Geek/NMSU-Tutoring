@@ -6,13 +6,13 @@ import Layout from '../components/layout'
 // Step 2: Define your component
 const AboutPage = () => {
   return (
-    <Layout pageTitle="About Me">
-      <p>Hi there! I'm the proud creator of this site, which I built with Gatsby.</p>
+    <Layout pageTitle="About Our Team">
+      <h2>Team Members: <br/>River, Mario, Jesse, Fernando </h2><p>Hi there! We're the proud creators of this site, which we built with Gatsby.</p>
     </Layout>
   )
 }
 
-export const Head = () => <title>About Me</title>
+export const Head = () => <title>About Us</title>
 
 // Step 3: Export your component
 export default AboutPage
