@@ -97,22 +97,13 @@ const IndexPage = () => {
     return false;
   }
 
-  <<<<<<< HEAD
+
   // Validation functions for new appointment creation
     function handleAddEvent() {
       const newEventStart = new Date(newEvent.start);
       const newEventEnd = new Date(newEvent.end);
       const diffTime = Math.abs(newEventEnd - newEventStart);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-=======
-// Validation functions for new appointment creation
-  function handleAddEvent() {
-      const newEventStart = new Date(newEvent.start);
-      const newEventEnd = new Date(newEvent.end);
-      const diffTime = Math.abs(newEventEnd - newEventStart);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
->>>>>>> 2c43cc2 (Initial Push)
-
       const today = new Date();
       const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+2);
       const dateTime = new Date(date);
