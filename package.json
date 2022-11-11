@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "start-express" : "node server.js",
+    "start-express": "node server.js",
     "start": "npm start",
     "build": "gatsby build",
     "serve": "gatsby serve",
