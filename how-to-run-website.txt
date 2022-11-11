@@ -1,0 +1,2 @@
+1. gatsby build (make sure there are no errors)
+2. node server.js (message "Tutoring Dashboard is up" should display in terminal)
