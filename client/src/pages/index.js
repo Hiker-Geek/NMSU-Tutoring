@@ -1,7 +1,7 @@
 // Import React
 // MOST IMPORTANT STEP
 // Reference layout from components to keep styling consistent
-import {Layout} from '../components'
+import {Layout, Scheduling, MyCalendar} from '../components'
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
