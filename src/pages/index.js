@@ -34,19 +34,19 @@ const localizer = dateFnsLocalizer({
 const events = [
   {
     title: "Tutoring Appointment",
-    start: new Date('2022-10-21 12:00'),
-    end: new Date('2022-10-21 13:00')
+    start: new Date('2022-11-09 12:00'),
+    end: new Date('2022-11-09 13:00')
   },
   {
     title: "School Holiday",
     allDay: true,
-    start: new Date('2022-10-31 00:00'),
-    end: new Date('2022-10-31 23:59')
+    start: new Date('2022-11-21 00:00'),
+    end: new Date('2022-11-25 23:59')
   },
   {
     title: "Conference",
-    start: new Date('2022-10-24 14:00'),
-    end: new Date('2022-10-24 16:00')
+    start: new Date('2022-11-18 14:00'),
+    end: new Date('2022-11-18 16:00')
   },
 ];
 
@@ -58,20 +58,14 @@ const IndexPage = () => {
   // Set 'state' for Calendar widget
   const [newEvent, setNewEvent] = useState({title: "", start: new Date(), end: new Date()})
   const [allEvents, setAllEvents] = useState(events)
-  const [events, setEvents] = useState(events)
+  const [myEvents, setEvents] = useState(events)
 
-  const handleAddAppointment = useCallback(
-    ({ start, end }) => {
-      const title = window.prompt('New Event Name')
-      if (title) {
-        setEvents((prev) => [...prev, { start, end, title }])
-      }
-    },
-    [setEvents]
-  )
+  function handleSelectSlot() {
+    document.getElementById('form').style.visibility = "hidden"
+  }
 
-  const handleSelectedAppointment = useCallback(
-    (event) => window.alert(event.title),
+  const handleSelectEvent = useCallback(
+    (event) => window.alert(event.title + " " + event.start + " " + event.end),
     []
   )
 
@@ -98,7 +92,7 @@ const IndexPage = () => {
   }
 
   // Validation functions for new appointment creation
-  function handleAddEvent() {
+    function handleAddEvent() {
       const newEventStart = new Date(newEvent.start);
       const newEventEnd = new Date(newEvent.end);
       const diffTime = Math.abs(newEventEnd - newEventStart);
@@ -125,12 +119,12 @@ const IndexPage = () => {
       else{
         setAllEvents([...allEvents, newEvent]);
       }
-  }
+    }
   return (
     // Layout tag is referencing layout.js component
     // This is done to keep styling of all components within the tag consistent with what is set in layout.js
     <Layout pageTitle="NMSU Tutor Schedular">
-      <div className='scheduling-form'>
+      <div id='form' className='scheduling-form'>
         <div>
           <h3>Student Name:</h3><br/>
           <input type="text" placeholder="first and last name" 
@@ -161,16 +155,16 @@ const IndexPage = () => {
         <button className='button' onClick={handleAddEvent}>Schedule</button>
       </div>
       <div style={{ height: "90%", width: "90%", marginLeft: "5%", fontSize: "15px", position: 'absolute', zIndex: '-1', alignContent:'center'}}>
-        <Calendar 
-          localizer={localizer} 
-          events={allEvents}
-          startAccessor="start"
-          endAccessor="end"
-          style={{'padding': '50px'}}
-
-          onSelectEvent={handleSelectedAppointment}
-          onSelectSlot={handleAddAppointment}
+        <Calendar  
+          events={myEvents}
+          localizer={localizer}
+          //localizer={events}
+          //startAccessor="start"
+          //endAccessor="end"
+          onSelectEvent={handleSelectEvent}
+          onSelectSlot={handleSelectSlot}
           selectable
+          style={{'padding': '50px'}}
         />
       </div>  
     </Layout>
