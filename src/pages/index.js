@@ -33,19 +33,19 @@ const localizer = dateFnsLocalizer({
 const events = [
   {
     title: "Tutoring Appointment",
-    start: new Date('2022-10-21 12:00'),
-    end: new Date('2022-10-21 13:00')
+    start: new Date('2022-11-09 12:00'),
+    end: new Date('2022-11-09 13:00')
   },
   {
     title: "School Holiday",
     allDay: true,
-    start: new Date('2022-10-31 00:00'),
-    end: new Date('2022-10-31 23:59')
+    start: new Date('2022-11-21 00:00'),
+    end: new Date('2022-11-25 23:59')
   },
   {
     title: "Conference",
-    start: new Date('2022-10-24 14:00'),
-    end: new Date('2022-10-24 16:00')
+    start: new Date('2022-11-18 14:00'),
+    end: new Date('2022-11-18 16:00')
   },
 ];
 
@@ -75,8 +75,8 @@ function dateCollision(){
   return false;
 }
 
-  function handleAddEvent() {
-
+  // Validation functions for new appointment creation
+    function handleAddEvent() {
       const newEventStart = new Date(newEvent.start);
       const newEventEnd = new Date(newEvent.end);
       const diffTime = Math.abs(newEventEnd - newEventStart);
@@ -141,10 +141,17 @@ function dateCollision(){
       </div>   
       <button className='button' onClick={handleAddEvent}>Schedule</button>
       <div style={{ height: "90%", width: "90%", marginLeft: "5%", fontSize: "15px", position: 'absolute', zIndex: '-1', alignContent:'center'}}>
-        <Calendar localizer={localizer} events={allEvents}
-          startAccessor="start"
-          endAccessor="end"
-          style={{'padding': '50px'}}/>
+        <Calendar  
+          events={myEvents}
+          localizer={localizer}
+          //localizer={events}
+          //startAccessor="start"
+          //endAccessor="end"
+          onSelectEvent={handleSelectEvent}
+          onSelectSlot={handleSelectSlot}
+          selectable
+          style={{'padding': '50px'}}
+        />
       </div>  
       </Layout>
   )

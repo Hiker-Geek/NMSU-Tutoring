@@ -26,6 +26,7 @@ h3{
     justify-content: center;
     margin-bottom: 15px;
     background-color: white;
+    visibility: hidden;
 }
 
 .scheduling-containers{
