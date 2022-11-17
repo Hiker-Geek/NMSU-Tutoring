@@ -33,11 +33,9 @@ paths:
                       example: Music
                     meetTime:
                       type: string
-                     # format: date-time
                       example: 2022-11-12 13:30:00
                     endTime:
                       type: string
-                     # format: date-time
                       example: 2022-11-12 14:30:00
                     building:
                       type: string
@@ -88,11 +86,9 @@ paths:
                       example: Music
                     meetTime:
                       type: string
-                     # format: date-time
                       example: 2022-11-12 13:30:00
                     endTime:
                       type: string
-                   #   format: date-time
                       example: 2022-11-12 14:30:00
                     building:
                       type: string
@@ -239,3 +235,228 @@ paths:
                       example: I like math.
         default:
           description: unexpected error
+
+  /api/deleteUser/{aggieID}:
+      delete:
+        description: delete a specific user.
+        parameters:
+          - name: aggieID
+            in: path
+            required: true
+            description: specific user.
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: successful delete of a users.
+        # '404':
+        #   description: id not found
+          default:
+            description: unexpected error
+
+  /api/deleteSchedule/{scheduleID}:
+    delete:
+      description: delete a specific user.
+      parameters:
+        - name: scheduleID
+          in: path
+          required: true
+          description: specific schedule wanted to be deleted.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful delete of a schedule.
+        default:
+          description: unexpected error
+
+  /api/user:
+    post:
+      responses:
+        '201':
+          description: successful creation of user.
+      requestBody:
+        description: Creating a user
+        content:
+          application/json:
+            schema:
+              properties:
+                aggieID:
+                  type: integer
+                  example: 800800800
+                firstName:
+                  type: string
+                  example: Bob
+                lastName:
+                  type: string
+                  example: Marley
+                password:
+                  type: integer
+                  example: password123
+                birthdate:
+                  type: string
+                #  format: date
+                  example: 2003-1-20
+                email:
+                  type: string
+                  format: email
+                  example: bobmarley@nmsu.edu
+                role:
+                  type: string
+                  example: T
+                gender:
+                  type: string
+                  example: M
+                bio:
+                  type: string
+                  example: I like music.
+                deptID:
+                  type: integer
+                  example: 3434343
+                subject:
+                  type: string
+                  example: MUSIC
+
+  /api/schedule:
+    post:
+      responses:
+        '201':
+          description: successful creation of schedule.
+      requestBody:
+        description: Creating a schedule
+        content:
+          application/json:
+            schema:
+              properties:
+                scheduleID:
+                  type: integer
+                  example: 15
+                scheduleTutorID:
+                  type: integer
+                  example: 80076466
+                meetTime:
+                  type: string
+                  example: 2022-11-12 13:30:00
+                endTime:
+                  type: string
+                  example: 2022-11-12 14:30:00
+                building:
+                  type: string
+                  example: Science Hall
+                roomNumber:
+                  type: string
+                  example: SH-118
+                notes:
+                  type: string
+                  example: Please show up five minutes early.
+
+  /api/booking:
+    post:
+      responses:
+        '201':
+          description: successful creation of a appointment.
+      requestBody:
+        description: Creating a appointment
+        content:
+          application/json:
+            schema:
+              properties:
+                appointmentID:
+                  type: integer
+                  example: 10
+                studentAggieID:
+                  type: integer
+                  example: 80032423
+                tutorAggieID:
+                  type: integer
+                  example: 80077647
+                schedulingID:
+                  type: integer
+                  example: 5
+                bookDate:
+                  type: string
+                  example: 2022-11-12
+                bookTime:
+                  type: string
+                  example: 4:30:00
+
+  /api/updateUser/{aggieID}:
+    put:
+      parameters:
+        - name: aggieID
+          in: path
+          required: true
+          description: Specific user.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful update of a user.
+      requestBody:
+        description: updating user
+        content:
+          application/json:
+            schema:
+              properties:
+                FirstName:
+                  type: string
+                  example: Bob
+                lastName:
+                  type: string
+                  example: Marley
+                password:
+                  type: string
+                  example: password123
+                birthdate:
+                  type: string
+                  example: 2000-12-31
+                email:
+                  type: string
+                  format: email
+                  example: bobmarley@nmsu.edu
+                role:
+                  type: string
+                  example: T
+                gender:
+                  type: string
+                  example: M
+                bio:
+                  type: string
+                  example: I like math.
+                Subject:
+                  type: string
+                  example: Music
+
+  /api/updateSchedule/{scheduleID}:
+    put:
+      parameters:
+        - name: scheduleID
+          in: path
+          required: true
+          description: Specific schedule.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful update of a schedule.
+      requestBody:
+        description: updating schedule
+        content:
+          application/json:
+            schema:
+              properties:
+                meetTime:
+                  type: string
+                  example: 2022-11-12 13:30:00
+                endTime:
+                  type: string
+                  example: 2022-11-12 14:30:00
+                building:
+                  type: string
+                  example: Science Hall
+                roomNumber:
+                  type: string
+                  example: SH-118
+                notes:
+                  type: string
+                  example: Please show up five minutes early.
