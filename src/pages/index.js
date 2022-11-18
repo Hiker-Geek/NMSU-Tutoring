@@ -177,7 +177,7 @@ const IndexPage = () => {
         <button className='button' onClick={handleAddEvent}>Schedule</button>
       </div>
       </div>
-      <div id='details-popup' className='scheduling-form'>
+      {/* <div id='details-popup' className='scheduling-form'>
         <div className='scheduling-form-content'>
         <div>
           <h4>Student Name: {this.state}</h4><br/>
@@ -189,7 +189,7 @@ const IndexPage = () => {
           <h4>End Date: </h4>
         </div>
       </div>
-      </div>
+      </div> */}
       <div style={{ height: "90%", width: "90%", marginLeft: "5%", fontSize: "15px", position: 'absolute', zIndex: '-1', alignContent:'center'}}>
         <Calendar  
           events={allEvents}
