@@ -1,18 +1,18 @@
-import "./pages.css";
-import "./searching.css";
-import { DropdownBtn, Cards } from "../components/searchComponents";
 import 'bootstrap/dist/css/bootstrap.css'
 import '../components/dropdown.css'
-import { useReducer } from 'react';
-import TextField from "@mui/material/TextField";
-import { Layout } from "../components";
-import * as React from 'react';
+import { DropdownBtn, Cards } from "../components/searchComponents";
 import Grid from '@mui/material/Grid'; // Grid version 1
-import Grid2 from '@mui/material/Unstable_Grid2'; // Grid version 2
 import icon1 from './images/icon1.jpg';
 import icon2 from './images/icon2.jpg';
 import icon3 from './images/icon3.jpg';
 import icon4 from './images/icon4.jpg';
+import { Layout } from "../components";
+import "./pages.css";
+import * as React from 'react';
+import "./searching.css";
+import { useReducer } from 'react';
+import TextField from "@mui/material/TextField";
+
 
 
 
@@ -154,29 +154,15 @@ const Search = () => {
     updateTutorList({ type: 'search', item: txt.target.value.toLowerCase(), initItems: tutors})
   }
 
-  const styles = {
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    textField: {
-      width: 300,
-      margin: 100,
-    },
-    //style for font size
-    resize:{
-      fontSize:50
-    },
-  }
 
   return (
     <Layout pageTitle="Search Tutors">
       <br></br>
-  <div className='scheduling-form'>
+  <div className='item'>
     <div className='divider'><DropdownBtn eventHandle={subjectBtn} title="Subjects ▼" items={subjectBtnItems} /><br/></div>
     <div className='divider'>
-      <TextField label="   Search   " id="textfield" variant="outlined"
-      InputLabelProps={{style: {fontSize: 16, marginLeft: -7, marginTop:-5, "text-decoration": "underline dotted #c7c7c7"}, shrink: true}}
+      <TextField label="Search" 
+      InputLabelProps={{style: {fontSize: 16, height: "20px", marginLeft: -7, marginTop:-5, "text-decoration": "underline dotted #c7c7c7"}, shrink: true, display: true}}
        sx={{
         width: "300px",
         "& .MuiInputBase-root": {
@@ -187,7 +173,7 @@ const Search = () => {
         onChange={txtUpdate} />
     </div>
   </div>
-
+<br/><br/>
   <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 
       {tutorList.map(item => (
