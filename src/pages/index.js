@@ -58,20 +58,27 @@ const IndexPage = () => {
   // Set 'state' for Calendar widget
   const [newEvent, setNewEvent] = useState({title: "", start: new Date(), end: new Date()})
   const [allEvents, setAllEvents] = useState(events)
-  const [events, setEvents] = useState(events)
+  var popup = document.getElementById('add-popup');
 
-  const handleAddAppointment = useCallback(
-    ({ start, end }) => {
-      const title = window.prompt('New Event Name')
-      if (title) {
-        setEvents((prev) => [...prev, { start, end, title }])
-      }
-    },
-    [setEvents]
-  )
+  // Called by Calendar API onSelectSlot()
+  // Sets popup to be visible
+  function handleSelectSlot() {
+    document.getElementById('add-popup').style.display = "block";
+  }
 
-  const handleSelectedAppointment = useCallback(
-    (event) => window.alert(event.title),
+  // If use clicks outside of popup, closes window
+  window.onclick = function(event) {
+    if (event.target == popup) {
+      popup.style.display = "none";
+      // NEED TO FIGURE OUT HOW TO IMPLEMENT
+      // Clears data when closed 
+      // popup.innerHTML = "";
+    }
+  }
+
+  // Called by Calendar API onSelectEvent()
+  const handleSelectEvent = useCallback(
+    (event) => window.alert(event.title + " " + event.start + " " + event.end),
     []
   )
 
@@ -124,20 +131,26 @@ const IndexPage = () => {
       }
       else{
         setAllEvents([...allEvents, newEvent]);
+        // If appointment is successfully added, hide popup
+        document.getElementById('add-popup').style.display = "none";
+        // NEED TO FIGURE OUT HOW TO IMPLEMENT
+        // Clears data when closed
+        // document.getElementById('add-popup').innerHTML = "";
       }
   }
   return (
     // Layout tag is referencing layout.js component
     // This is done to keep styling of all components within the tag consistent with what is set in layout.js
     <Layout pageTitle="NMSU Tutor Schedular">
-      <div className='scheduling-form'>
+      <div id='add-popup' className='scheduling-form'>
+        <div className='scheduling-form-content'>
         <div>
-          <h3>Student Name:</h3><br/>
+          <h4>Student Name:</h4><br/>
           <input type="text" placeholder="first and last name" 
           value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />&ensp;&ensp;
         </div>
         <div>
-          <h3>Start:</h3>
+          <h4>Start:</h4>
           <DatePicker 
             placeholderText='start date/time'  
             selected={newEvent.start} 
@@ -148,7 +161,7 @@ const IndexPage = () => {
             dateFormat="MMMM d, yyyy h:mm aa" />
         </div>
         <div>
-          <h3>End:</h3>
+          <h4>End:</h4>
           <DatePicker 
             placeholderText='end date/time'  
             selected={newEvent.end} 
@@ -160,19 +173,23 @@ const IndexPage = () => {
         </div>
         <button className='button' onClick={handleAddEvent}>Schedule</button>
       </div>
+      </div>
       <div style={{ height: "90%", width: "90%", marginLeft: "5%", fontSize: "15px", position: 'absolute', zIndex: '-1', alignContent:'center'}}>
-        <Calendar 
-          localizer={localizer} 
+        <Calendar  
           events={allEvents}
+          localizer={localizer}
           startAccessor="start"
           endAccessor="end"
+          onSelectEvent={handleSelectEvent}
+          onSelectSlot={handleSelectSlot}
+          selectable
           style={{'padding': '50px'}}
 
           onSelectEvent={handleSelectedAppointment}
           onSelectSlot={handleAddAppointment}
           selectable
         />
-      </div>  
+      </div>
     </Layout>
   )
 }
