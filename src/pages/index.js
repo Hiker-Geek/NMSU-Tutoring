@@ -185,9 +185,9 @@ const IndexPage = () => {
           selectable
           style={{'padding': '50px'}}
 
-          onSelectEvent={handleSelectedAppointment}
-          onSelectSlot={handleAddAppointment}
-          selectable
+          //onSelectEvent={handleSelectedAppointment}
+          //onSelectSlot={handleAddAppointment}
+          //selectable
         />
       </div>
     </Layout>

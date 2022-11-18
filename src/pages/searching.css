@@ -4,9 +4,10 @@
     margin-bottom: 2em;   
     text-align: center;
     display: inline-grid;
+    margin-top: -20px;
 }
 .divider {
-    display: inline-block;
+    display: inline;
     margin: 2;
 }
 
