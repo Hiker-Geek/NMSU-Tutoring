@@ -1,0 +1,16 @@
+.item {
+    height: 30px;
+    display: inline;
+    margin-bottom: 2em;   
+    text-align: center;
+    display: inline-grid;
+}
+.divider {
+    display: inline-block;
+    margin: 2;
+}
+
+.cardDivider {
+    flex: 2;
+}
+

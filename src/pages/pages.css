@@ -45,3 +45,9 @@ h3{
     display: inline-block;
     font-size: 20px;
 }
+
+#textfield{
+    font-size: 18px;
+    padding: 5px;
+    
+}
