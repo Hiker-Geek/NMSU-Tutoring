@@ -1,6 +1,8 @@
 // Reference layout from components to keep styling consistent
 import {Layout} from '../components'
 import React, { useCallback, useState } from "react";
+// Used to set state for displaying selected event details
+import moment, { calendarFormat } from 'moment';
 // Pull in Calendar and dateFnsLocalizer from 'react-big-calendar' package
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 // Stock stylesheet for 'react-big-calendar'
@@ -78,7 +80,7 @@ const IndexPage = () => {
 
   // Called by Calendar API onSelectEvent()
   const handleSelectEvent = useCallback(
-    (event) => window.alert(event.title + " " + event.start + " " + event.end),
+    (event) => window.alert(event.title + "\n" + event.start + "\n" + event.end),
     []
   )
 
@@ -133,6 +135,7 @@ const IndexPage = () => {
         setAllEvents([...allEvents, newEvent]);
         // If appointment is successfully added, hide popup
         document.getElementById('add-popup').style.display = "none";
+        // addtoDB(newEvent)
         // NEED TO FIGURE OUT HOW TO IMPLEMENT
         // Clears data when closed
         // document.getElementById('add-popup').innerHTML = "";
@@ -172,6 +175,19 @@ const IndexPage = () => {
             dateFormat="MMMM d, yyyy h:mm aa" />
         </div>
         <button className='button' onClick={handleAddEvent}>Schedule</button>
+      </div>
+      </div>
+      <div id='details-popup' className='scheduling-form'>
+        <div className='scheduling-form-content'>
+        <div>
+          <h4>Student Name: {this.state}</h4><br/>
+        </div>
+        <div>
+          <h4>Start Date: </h4>
+        </div>
+        <div>
+          <h4>End Date: </h4>
+        </div>
       </div>
       </div>
       <div style={{ height: "90%", width: "90%", marginLeft: "5%", fontSize: "15px", position: 'absolute', zIndex: '-1', alignContent:'center'}}>
