@@ -16,27 +16,27 @@
   background-color: #8c0b42;
   outline-color: #8c0b42;
   z-index: +1;
+  padding-top: 10px;
 }
   
-.heading {
-  color: black;
-  margin-top: 5%;
-}
-  
-.nav-links {
-  display: flex;
-  list-style: none;
-  padding-left: 0;    
-}
-
-.nav-link-item {
-  padding-right: 2rem;
-  padding-left: 0;
-  margin: 0;
-}
-
-.nav-link-text {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
+  .heading {
+    color: black;
+    margin-top: 5%;
+  }
+  .nav-links {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    
+  }
+  .nav-link-item {
+    padding-right: 2rem;
+    padding-left: 0;
+    margin: 0;
+  }
+  .nav-link-text {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    
+  }
