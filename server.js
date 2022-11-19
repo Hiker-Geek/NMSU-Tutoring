@@ -107,6 +107,144 @@ app.get('/api/listBookings/:aggieId', async (req, res, next) => {
     }
 });
 
+//Example: http://localhost:8000/api/deleteUser/800800800
+app.delete('/api/deleteUser/:aggieID', async (req, res, next) => {
+    try {
+        const deleteAccountAggieId = req.params.aggieID;
+        await tutorDB('users as u')
+            .where('u.aggieID', deleteAccountAggieId)
+            .del();
+        res.status(200).send(`User with ID: ${deleteAccountAggieId} was Deleted.`)
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
+//Example: http://localhost:8000/api/deleteSchedule/5
+app.delete('/api/deleteSchedule/:scheduleID', async (req, res, next) => {
+    try {
+        const deleteScheduleID = req.params.scheduleID;
+        await tutorDB('schedules as s')
+            .where('s.scheduleID', `${deleteScheduleID}`)
+            .del();
+        res.status(200).send(`Schedule with ID: ${deleteScheduleID} was deleted.`)
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
+//Example PAYLOAD at http://localhost:8000/api/user:
+//              {"aggieID": 800800,
+//             "firstname": "Bill",
+//             "lastname": "Bo",
+//             "password": "12345",
+//             "birthdate": "2003-1-20",
+//             "email": "fooo@bar.com",
+//             "role": "t",
+//             "gender": "t",
+//             "bio": "My name is Bill.",
+//             "deptID": 342324,
+//             "subject": "MATH"}
+
+app.post('/api/user', async (req, res, next) => {
+    try {
+        const {aggieID, firstname, lastname, password, birthdate, email, role, gender, bio, deptID, subject} = req.body;
+        await tutorDB('users').insert({aggieID, firstname, lastname,
+            password, birthdate, email, role, gender,
+            bio, deptID, subject});
+        res.status(201).send(`New User: ${req.body.firstname} ${req.body.lastname} has been created`);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
+//Example PAYLOAD at http://localhost:8000/api/schedule:
+//            {"scheduleID": 4,
+//             "scheduledTutorID": 493458463,
+//             "meetTime": "2022-11-25 10:30:00",
+//             "endTime": "2022-11-25 12:30:00",
+//             "building": "Science Hall",
+//             "roomNumber": "SH 118A",
+//             "notes": "Please come five minutes early."}
+
+app.post('/api/schedule', async (req, res, next) => {
+    try {
+        const {scheduleID, scheduledTutorID, meetTime, endTime, building, roomNumber, notes} = req.body;
+        await tutorDB('schedules').insert({scheduleID, scheduledTutorID, meetTime, endTime, building, roomNumber, notes});
+        res.status(201).send(`New schedule made from tutor ${req.body.scheduledTutorID} from ${req.body.meetTime} to ${req.body.endTime} has been created`);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
+//Example PAYLOAD at http://localhost:8000/api/booking:
+//            {"appointmentID": 10,
+//             "studentAggieID": 478214179,
+//             "tutorAggieID": 493458463,
+//             "schedulingID": 4,
+//             "bookDate": "2022-11-14",
+//             "bookTime": " 4:30:00"}
+
+app.post('/api/booking', async (req, res, next) => {
+    try {
+        const {appointmentID, studentAggieID, tutorAggieID, schedulingID, bookDate, bookTime} = req.body;
+        await tutorDB('booking').insert({appointmentID, studentAggieID, tutorAggieID, schedulingID, bookDate, bookTime});
+        res.status(201).send(`${req.body.studentAggieID} booked a appointment with ${req.body.tutorAggieID} at ${req.body.bookTime} ${req.body.bookDate}`);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
+//Example PAYLOAD at http://localhost:8000/api/updateUser/800800:
+//     {"firstname": "Billy",
+//     "lastname": "Bob",
+//     "password": "12345",
+//     "birthdate": "2003-1-20",
+//     "email": "fooo@bar.com",
+//     "role": "t",
+//     "gender": "t",
+//     "bio": "My name is Billy.",
+//     "deptID": 342324,
+//     "subject": "MATH"}
+
+app.put('/api/updateUser/:aggieID', async (req, res, next) => {
+    try {
+        const userID = req.params.aggieID;
+        const {firstname, lastname, password, birthdate, email, role, gender, bio, deptID, subject} = req.body;
+        await tutorDB('users as u').where("u.aggieID", `${userID}`)
+            .update({firstname, lastname, password, birthdate, email, role, gender, bio, deptID, subject});
+        res.status(200).send(`User ${req.body.firstname} ${req.body.lastname} information has been updated`);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
+//Example PAYLOAD at http://localhost:8000/api/updateSchedule/4:
+//            {"meetTime": "2022-11-25 10:30:00",
+//             "endTime": "2022-11-25 12:30:00",
+//             "building": "Science Hall",
+//             "roomNumber": "SH 116",
+//             "notes": "Please come five minutes early."}
+
+app.put('/api/updateSchedule/:scheduleID', async (req, res, next) => {
+    try {
+        const changedScheduleID = req.params.scheduleID;
+        const {meetTime, endTime, building, roomNumber, notes} = req.body;
+        await tutorDB('schedules as s').where("s.scheduleID", `${changedScheduleID}`)
+            .update({meetTime, endTime, building, roomNumber, notes});
+        res.status(200).send(`Schedule has been updated`);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
 app.listen(8000, () => console.log('Tutoring Dashboard is up.'));
 module.exports = app;
 
