@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "start-express" : "node server.js",
+    "start-express": "node server.js",
     "start": "npm start",
     "build": "gatsby build",
     "serve": "gatsby serve",
@@ -24,7 +24,6 @@
     "gatsby-plugin-image": "^2.24.0",
     "gatsby-plugin-sharp": "^4.24.0",
     "gatsby-source-filesystem": "^4.24.0",
-    "gatsby-source-pg": "^1.0.0-rc.0",
     "jest": "^29.2.2",
     "knex": "^2.3.0",
     "moment": "^2.29.4",
