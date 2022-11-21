@@ -68,7 +68,7 @@ const IndexPage = () => {
 
   // If use clicks outside of popup, closes window
   window.onclick = function(event) {
-    if (event.target == popup) {
+    if (event.target === popup) {
       popup.style.display = "none";
       // NEED TO FIGURE OUT HOW TO IMPLEMENT
       // Clears data when closed 
