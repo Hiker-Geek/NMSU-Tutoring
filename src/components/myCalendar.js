@@ -11,10 +11,13 @@ import "react-datepicker/dist/react-datepicker.css";
 /*All functions below are copied over to ./pages/index.js until exporting them from this file without issue can be figured out.
   Exporting was attempted but the calendar turned up blank completely blank.  */
 
+// Const for local timezone and language
 const locales = {
   "en-US": require("date-fns/locale/en-US"),
 };
 
+// Const for initializng dateFnsLocalizer
+// Passes custom locales
 const localizer = dateFnsLocalizer({
   format,
   parse,
@@ -27,8 +30,8 @@ const localizer = dateFnsLocalizer({
 const events = [
   {
     title: "Tutoring Appointment",
-    start: new Date('2022-10-3 12:00'),
-    end: new Date('2022-10-3 13:00')
+    start: new Date('2022-10-21 12:00'),
+    end: new Date('2022-10-21 13:00')
   },
   {
     title: "School Holiday",
@@ -38,12 +41,13 @@ const events = [
   },
   {
     title: "Conference",
-    start: new Date('2022-10-3 09:00'),
-    end: new Date('2022-10-3 10:00')
+    start: new Date('2022-10-24 14:00'),
+    end: new Date('2022-10-24 16:00')
   },
 ];
 
 function MyCalendar() {
+  // Set 'state' for Calendar widget
   const [newEvent, setNewEvent] = useState({title: "", start: "", end: ""})
   const [allEvents, setAllEvents] = useState(events)
 

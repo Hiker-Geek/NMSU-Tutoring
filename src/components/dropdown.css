@@ -1,0 +1,13 @@
+.btn-lostPage {
+    background-color: #8c0b42;
+    color: white;
+}
+
+.btn-lostPage:hover {
+    background-color: #8c0b42;
+    color: rgb(173, 173, 173);
+}
+
+.dropdown-toggle::after {
+    display: all !important; 
+  }
