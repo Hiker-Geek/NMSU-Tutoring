@@ -16,6 +16,7 @@
   background-color: #8c0b42;
   outline-color: #8c0b42;
   z-index: +1;
+  padding-top: 10px;
 }
   
   .heading {
@@ -35,6 +36,7 @@
   }
   .nav-link-text {
     color: white;
-    text-decoration: none;
+    font-size: 20px;
     font-weight: bold;
+    
   }
