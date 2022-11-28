@@ -1,11 +1,11 @@
 Create table users
-	(aggieID		int 		NOT NULL UNIQUE,
+	(aggieID		INTEGER PRIMARY KEY,
 	 FirstName		varchar(32),
 	 LastName		varchar(32),
 	 Password		varchar(32),
 	 Birthdate	   	 date,
-	 Email			varchar(32)	NOT NULL,
-	 Role			char(1)		NOT NULL,
+	 Email			varchar(32),
+	 Role			char(1),
 	 Gender		char(1),
 	 Bio		varChar(32),
 	 DeptID		int,
@@ -33,7 +33,7 @@ userStudentID		int			NOT NULL UNIQUE,
 	
 	
 	create table schedules
-    (scheduleID		int	NOT NULL UNIQUE,
+    (scheduleID		INTEGER PRIMARY KEY,
      scheduledTutorID  int,
      meetTime       dateTime NOT NULL,
      endTime        dateTime,
@@ -47,7 +47,7 @@ userStudentID		int			NOT NULL UNIQUE,
 
 	
 	create table booking
-	(appointmentID			int 	NOT NULL UNIQUE,
+	(appointmentID			INTEGER PRIMARY KEY,
 	studentAggieID			int,
 	tutorAggieID			int,
 	schedulingID			int,
