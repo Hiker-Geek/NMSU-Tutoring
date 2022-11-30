@@ -112,7 +112,6 @@ const IndexPage = () => {
       const newEventEnd = new Date(newEvent.end);
       const diffTime = Math.abs(newEventEnd - newEventStart);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
       const today = new Date();
       const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+2);
       const dateTime = new Date(date);
