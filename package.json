@@ -20,6 +20,7 @@
     "@emotion/styled": "^11.10.5",
     "@material/textfield": "^14.0.0",
     "@mui/material": "^5.10.14",
+    "axios": "^1.2.0",
     "boostrap": "^2.0.0",
     "bootstrap": "^3.4.1",
     "date-fns": "^2.29.3",
