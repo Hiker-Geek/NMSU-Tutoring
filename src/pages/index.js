@@ -38,20 +38,20 @@ const localizer = dateFnsLocalizer({
 //Developer's note: for the correct date and time dates must be string literals
 const events = [
   {
-    title: "Tutoring Appointment",
-    start: new Date('2022-11-09 12:00'),
-    end: new Date('2022-11-09 13:00')
+    title: "Tutoring Appointment W/ Marcelus Walus",
+    start: new Date('2022-12-09 12:00'),
+    end: new Date('2022-12-09 13:00')
   },
   {
     title: "School Holiday",
     allDay: true,
-    start: new Date('2022-11-21 00:00'),
-    end: new Date('2022-11-25 23:59')
+    start: new Date('2022-12-19 00:00'),
+    end: new Date('2023-01-08 23:59')
   },
   {
     title: "Conference",
-    start: new Date('2022-11-18 14:00'),
-    end: new Date('2022-11-18 16:00')
+    start: new Date('2022-12-18 14:00'),
+    end: new Date('2022-12-18 16:00')
   },
 ];
 
