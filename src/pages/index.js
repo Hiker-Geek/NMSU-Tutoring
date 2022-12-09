@@ -15,70 +15,68 @@ import getDay from 'date-fns/getDay';
 // Import CSS stylesheets
 import "./pages.css";
 
-const fs = require('fs');
+//const fs = require('fs');
 const path = require('path');
 const match = require('@reach/router/lib/utils').match;
+//   const publicDir = options.publicDir || path.resolve('public/')
 
-module.exports = function redirect (data = 'gatsby-express.json', options) {
-  const publicDir = options.publicDir || path.resolve('public/')
+//   if (typeof data === 'string') {
+//     data = fs.readFileSync(data)
+//     data = JSON.parse(data)
+//   }
 
-  if (typeof data === 'string') {
-    data = fs.readFileSync(data)
-    data = JSON.parse(data)
-  }
+//   const join = p => path.join(publicDir, p)
 
-  const join = p => path.join(publicDir, p)
+//   return async function (req, res, next) {
+//     for (var r of data.redirects) {
+//       if (req.path === r.fromPath) {
+//         const code = r.isPermanent ? 301 : 302
+//         return res.redirect(code, r.toPath)
+//       }
+//     }
 
-  return async function (req, res, next) {
-    for (var r of data.redirects) {
-      if (req.path === r.fromPath) {
-        const code = r.isPermanent ? 301 : 302
-        return res.redirect(code, r.toPath)
-      }
-    }
+//     for (var page of data.pages) {
+//       if (req.path === page.path) {
+//         // handle /without-trailing-slash to /without-trailing-slash/index.html
+//         const index = require.resolve('index.html', {
+//           paths: [
+//             join(page.path)
+//           ]
+//         })
 
-    for (var page of data.pages) {
-      if (req.path === page.path) {
-        // handle /without-trailing-slash to /without-trailing-slash/index.html
-        const index = require.resolve('index.html', {
-          paths: [
-            join(page.path)
-          ]
-        })
+//         if (index) {
+//           // remove trailing slashes in request
+//           if (options.redirectSlashes && req.path.endsWith('/')) {
+//             return res.redirect(req.path.substr(0, req.path.length - 1))
+//           }
+//           return res.sendFile(index)
+//         }
+//         break
+//       }
+//     }
 
-        if (index) {
-          // remove trailing slashes in request
-          if (options.redirectSlashes && req.path.endsWith('/')) {
-            return res.redirect(req.path.substr(0, req.path.length - 1))
-          }
-          return res.sendFile(index)
-        }
-        break
-      }
-    }
+//     for (const page of data.pages.filter(p => p.matchPath)) {
+//       const m = match(page.matchPath, req.path)
 
-    for (const page of data.pages.filter(p => p.matchPath)) {
-      const m = match(page.matchPath, req.path)
+//       if (m) {
+//         const index = require.resolve('index.html', {
+//           paths: [join(m.uri)]
+//         })
 
-      if (m) {
-        const index = require.resolve('index.html', {
-          paths: [join(m.uri)]
-        })
+//         if (index) {
+//           return res.sendFile(index)
+//         }
+//         break
+//       }
+//     }
 
-        if (index) {
-          return res.sendFile(index)
-        }
-        break
-      }
-    }
-
-    next()
-  }
-}
-
+//     next()
+//   }
+// }
 
 
 // Const for local timezone and language, specific to Calendar only
+
 const locales = {
   "en-US": require("date-fns/locale/en-US"),
 };
@@ -139,22 +137,29 @@ const IndexPage = () => {
   const [eventDetails, setSelectedEvent] = useState({title: "", start: new Date(), end: new Date()})
   // Grab static data created above for Calendar to call and display
   const [allEvents, setAllEvents] = useState(events)
+  
   // Below are both variables used to both display and hide both the create and update popups
-  var addPopup = document.getElementById('add-popup');
-  var detailsPopup = document.getElementById('details-popup');
+  if (typeof document !== `undefined`) { // or typeof document !== 'undefined'
+    // your code that uses global objects here
+    var addPopup = document.getElementById('add-popup');
+    var detailsPopup = document.getElementById('details-popup');
+  }
 
   // Called by Calendar API onSelectSlot()
   // Sets popup to be visible
   function handleSelectSlot() {
-    document.getElementById('add-popup').style.display = "block";
+    if (typeof document !== `undefined`)
+      document.getElementById('add-popup').style.display = "block";
   }
 
   // If user clicks outside of popup, closes window
-  window.onclick = function(event) {
-    if (event.target == addPopup) {
-      addPopup.style.display = "none";
-    } else if (event.target == detailsPopup) {
-      detailsPopup.style.display = "none";
+  if (typeof window !== `undefined`) {
+    window.onclick = function(event) {
+      if (event.target == addPopup) {
+        addPopup.style.display = "none";
+      } else if (event.target == detailsPopup) {
+        detailsPopup.style.display = "none";
+      }
     }
   }
 
@@ -162,7 +167,8 @@ const IndexPage = () => {
   // Passes event parameter for grabbing selected events details
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
-    document.getElementById('details-popup').style.display = "block";
+    if (typeof document !== `undefined`)
+      document.getElementById('details-popup').style.display = "block";
   }
 
   /*
@@ -190,7 +196,8 @@ const IndexPage = () => {
   // Function to 'handle' when an event is updated, currently only makes popup visible
   // FUTURE IMPLENTATION: Add validation mirroring that of create
   function handleUpdateEvent() {
-    document.getElementById('add-popup').style.display = "none";
+    if (typeof document !== `undefined`)
+      document.getElementById('add-popup').style.display = "none";
   }
 
   // Validation function for new appointment creation as well as creating new event with users entered properties
@@ -221,7 +228,8 @@ const IndexPage = () => {
         newEvent.title =  "Tutoring Appointment W/ " + newEvent.title;
         setAllEvents([...allEvents, newEvent]);
         // If appointment is successfully added, hide popup
-        document.getElementById('add-popup').style.display = "none";
+        if (typeof document !== `undefined`)
+          document.getElementById('add-popup').style.display = "none";
       }
   }
   return (
