@@ -34,20 +34,20 @@ const localizer = dateFnsLocalizer({
 const events = [
   {
     title: "Tutoring Appointment",
-    start: new Date('2022-11-09 12:00'),
-    end: new Date('2022-11-09 13:00')
+    start: new Date('2022-12-02 12:00'),
+    end: new Date('2022-12-02 12:15')
+  },
+  {
+    title: "Tutoring Appointment",
+    start: new Date('2022-12-06 14:30'),
+    end: new Date('2022-12-06 14:45')
   },
   {
     title: "School Holiday",
     allDay: true,
-    start: new Date('2022-11-21 00:00'),
-    end: new Date('2022-11-25 23:59')
-  },
-  {
-    title: "Conference",
-    start: new Date('2022-11-18 14:00'),
-    end: new Date('2022-11-18 16:00')
-  },
+    start: new Date('2022-12-12 00:00'),
+    end: new Date('2022-12-16 23:59')
+  }
 ];
 
 // Begin IndexPage Component
@@ -57,8 +57,10 @@ const events = [
 const IndexPage = () => {
   // Set 'state' for Calendar widget
   const [newEvent, setNewEvent] = useState({title: "", start: new Date(), end: new Date()})
+  const [eventDetails, setSelectedEvent] = useState({title: "", start: new Date(), end: new Date()})
   const [allEvents, setAllEvents] = useState(events)
-  var popup = document.getElementById('add-popup');
+  var addPopup = document.getElementById('add-popup');
+  var detailsPopup = document.getElementById('details-popup');
 
   // Called by Calendar API onSelectSlot()
   // Sets popup to be visible
@@ -68,19 +70,18 @@ const IndexPage = () => {
 
   // If use clicks outside of popup, closes window
   window.onclick = function(event) {
-    if (event.target == popup) {
-      popup.style.display = "none";
-      // NEED TO FIGURE OUT HOW TO IMPLEMENT
-      // Clears data when closed 
-      // popup.innerHTML = "";
+    if (event.target == addPopup) {
+      addPopup.style.display = "none";
+    } else if (event.target == detailsPopup) {
+      detailsPopup.style.display = "none";
     }
   }
 
   // Called by Calendar API onSelectEvent()
-  const handleSelectEvent = useCallback(
-    (event) => window.alert(event.title + " " + event.start + " " + event.end),
-    []
-  )
+  const handleSelectEvent = (event) => {
+    setSelectedEvent(event);
+    document.getElementById('details-popup').style.display = "block";
+  }
 
   /*
   * The following function allows event scheduling and alerts user when scheduling new events would overlap with pre-existing events
@@ -104,6 +105,9 @@ const IndexPage = () => {
     return false;
   }
 
+  function handleUpdateEvent() {
+    document.getElementById('add-popup').style.display = "none";
+  }
 
   // Validation functions for new appointment creation
     function handleAddEvent() {
@@ -133,15 +137,46 @@ const IndexPage = () => {
         setAllEvents([...allEvents, newEvent]);
         // If appointment is successfully added, hide popup
         document.getElementById('add-popup').style.display = "none";
-        // NEED TO FIGURE OUT HOW TO IMPLEMENT
-        // Clears data when closed
-        // document.getElementById('add-popup').innerHTML = "";
       }
   }
   return (
     // Layout tag is referencing layout.js component
     // This is done to keep styling of all components within the tag consistent with what is set in layout.js
     <Layout pageTitle="NMSU Tutor Schedular">
+      
+      <div id='details-popup' className='scheduling-form'>
+        <div className='scheduling-form-content'>
+          <div>
+            <h4>Student Name:</h4><br/>
+          <input type="text" placeholder="first and last name" 
+          value={eventDetails.title} onChange={(e) => setNewEvent({ ...eventDetails, title: e.target.value })} />&ensp;&ensp;
+        </div>
+        <div>
+          <h4>Start:</h4>
+          <DatePicker 
+            placeholderText='start date/time'  
+            selected={eventDetails.start} 
+            onChange={(start) => setNewEvent({ ...eventDetails, start })}
+            showTimeSelect
+            timeIntervals={15}
+            timeCaption="time"
+            dateFormat="MMMM d, yyyy h:mm aa" />
+        </div>
+        <div>
+          <h4>End:</h4>
+          <DatePicker 
+            placeholderText='end date/time'  
+            selected={eventDetails.end} 
+            onChange={(end) => setNewEvent({ ...eventDetails, end })}
+            showTimeSelect
+            timeIntervals={15}
+            timeCaption="Time"
+            dateFormat="MMMM d, yyyy h:mm aa" />
+        </div>
+        <button className='button' onClick={handleUpdateEvent}>Update Appointment</button>
+        </div>
+      </div>
+      
       <div id='add-popup' className='scheduling-form'>
         <div className='scheduling-form-content'>
         <div>
@@ -183,13 +218,11 @@ const IndexPage = () => {
           onSelectEvent={handleSelectEvent}
           onSelectSlot={handleSelectSlot}
           selectable
+          selected={eventDetails}
           style={{'padding': '50px'}}
-
-          //onSelectEvent={handleSelectedAppointment}
-          //onSelectSlot={handleAddAppointment}
-          //selectable
         />
       </div>
+    
     </Layout>
   )
 }
