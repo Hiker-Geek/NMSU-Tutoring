@@ -29,6 +29,30 @@ const tutorDB = require('knex')({
     useNullAsDefault: true
 });
 
+// READ
+app.get('/listTutors', async (req, res, next) => {
+    try {
+        const tutorsReturned = await tutorDB.select(['FullName', 'Major', 'StudentYear', 'Subjects', 'Bio', 'Schedule', 'Locations'])
+            .from('tutor');
+        res.json(tutorsReturned);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
+// CREATE
+app.post('/createTutor', async (req, res, next) => {
+    try {
+        const {FullName, Major, StudentYear, Subjects, Bio, Schedule, Locations} = req.body;
+        await tutorDB('tutor').insert({FullName, Major, StudentYear, Subjects, Bio, Schedule, Locations});
+        res.status(201).send(`New User: ${req.body.FullName} has been created`);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
 //Basic endpoint for all the userInfo
 //example: http://localhost:8000/api/userDetails/478214179
 app.get('/api/userDetails/:aggieID', async (req, res, next) => {
