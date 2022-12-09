@@ -155,6 +155,7 @@ const IndexPage = () => {
         alert(myString);
       }
       else{
+        newEvent.title =  "Tutoring Appointment W/ " + newEvent.title;
         setAllEvents([...allEvents, newEvent]);
         // If appointment is successfully added, hide popup
         document.getElementById('add-popup').style.display = "none";
@@ -170,7 +171,7 @@ const IndexPage = () => {
           <div>
             <h4>Appointment Info:</h4><br/>
           <input type="text" placeholder="first and last name" 
-          value={eventDetails.title} onChange={(e) => setNewEvent({ ...eventDetails, title: "Tutoring Appointment W/ " +  e.target.value })} />&ensp;&ensp;
+          value={eventDetails.title} onChange={(e) => setNewEvent({ ...eventDetails, title: e.target.value })} />&ensp;&ensp;
         </div>
         <div>
           <h4>Start:</h4>
@@ -203,7 +204,7 @@ const IndexPage = () => {
         <div>
           <h4>Student Name:</h4><br/>
           <input type="text" placeholder="first and last name" 
-          value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: "Tutoring Appointment W/ " + e.target.value })} />&ensp;&ensp;
+          value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />&ensp;&ensp;
         </div>
         <div>
           <h4>Start:</h4>
