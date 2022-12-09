@@ -1,6 +1,6 @@
 // Reference layout from components to keep styling consistent
 import {Layout} from '../components'
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 // Pull in Calendar and dateFnsLocalizer from 'react-big-calendar' package
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 // Stock stylesheet for 'react-big-calendar'
@@ -15,7 +15,7 @@ import getDay from 'date-fns/getDay';
 // Import CSS stylesheets
 import "./pages.css";
 
-// Const for local timezone and language
+// Const for local timezone and language, specific to Calendar only
 const locales = {
   "en-US": require("date-fns/locale/en-US"),
 };
@@ -30,7 +30,8 @@ const localizer = dateFnsLocalizer({
   locales
 });
 
-//Developer's note: for the correct date and time dates must be string literals
+// Developer's note: for the correct date and time dates must be string literals
+// Static data created to test Calendar ability for multiple appointments
 const events = [
   {
     title: "Tutoring Appointment W/ Jesse",
@@ -66,14 +67,16 @@ const events = [
 ];
 
 // Begin IndexPage Component
-// I created this following only an example but this should be broken up by header,
-// content, navbar
-// * Need to implement by Sprint 2 *
+// All major functionality directed specifically at contents of indes page need
+// to be contained within this constant
 const IndexPage = () => {
-  // Set 'state' for Calendar widget
+  // Set event for Calendar when a new appointment is created, give default values to avoid crash on inital load
   const [newEvent, setNewEvent] = useState({title: "", start: new Date(), end: new Date()})
+  // Set event details for when an appointment is clicked on, give default values to avoid crash on inital load
   const [eventDetails, setSelectedEvent] = useState({title: "", start: new Date(), end: new Date()})
+  // Grab static data created above for Calendar to call and display
   const [allEvents, setAllEvents] = useState(events)
+  // Below are both variables used to both display and hide both the create and update popups
   var addPopup = document.getElementById('add-popup');
   var detailsPopup = document.getElementById('details-popup');
 
@@ -83,7 +86,7 @@ const IndexPage = () => {
     document.getElementById('add-popup').style.display = "block";
   }
 
-  // If use clicks outside of popup, closes window
+  // If user clicks outside of popup, closes window
   window.onclick = function(event) {
     if (event.target == addPopup) {
       addPopup.style.display = "none";
@@ -93,6 +96,7 @@ const IndexPage = () => {
   }
 
   // Called by Calendar API onSelectEvent()
+  // Passes event parameter for grabbing selected events details
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
     document.getElementById('details-popup').style.display = "block";
@@ -120,11 +124,13 @@ const IndexPage = () => {
     return false;
   }
 
+  // Function to 'handle' when an event is updated, currently only makes popup visible
+  // FUTURE IMPLENTATION: Add validation mirroring that of create
   function handleUpdateEvent() {
     document.getElementById('add-popup').style.display = "none";
   }
 
-  // Validation functions for new appointment creation
+  // Validation function for new appointment creation as well as creating new event with users entered properties
     function handleAddEvent() {
       const newEventStart = new Date(newEvent.start);
       const newEventEnd = new Date(newEvent.end);
@@ -158,7 +164,7 @@ const IndexPage = () => {
     // Layout tag is referencing layout.js component
     // This is done to keep styling of all components within the tag consistent with what is set in layout.js
     <Layout pageTitle="NMSU Tutor Schedular">
-      
+      {/* This section begins details popup used to update an event */}
       <div id='details-popup' className='scheduling-form'>
         <div className='scheduling-form-content'>
           <div>
@@ -191,7 +197,7 @@ const IndexPage = () => {
         <button className='button' onClick={handleUpdateEvent}>Update Appointment</button>
         </div>
       </div>
-      
+      {/* This section begins create popup used to create a new event */}
       <div id='add-popup' className='scheduling-form'>
         <div className='scheduling-form-content'>
         <div>
@@ -224,6 +230,7 @@ const IndexPage = () => {
         <button className='button' onClick={handleAddEvent}>Schedule</button>
       </div>
       </div>
+      {/* Below is actual implementation of Calendar widget */}
       <div style={{ height: "90%", width: "90%", marginLeft: "5%", fontSize: "15px", position: 'absolute', zIndex: '-1', alignContent:'center'}}>
         <Calendar  
           events={allEvents}

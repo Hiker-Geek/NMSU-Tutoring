@@ -1,7 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import '../components/dropdown.css'
 import { DropdownBtn, Cards } from "../components/searchComponents";
-import Grid from '@mui/material/Grid'; // Grid version 1
+// Grid version 1
+import Grid from '@mui/material/Grid';
 import icon1 from './images/icon1.jpg';
 import icon2 from './images/icon2.jpg';
 import icon3 from './images/icon3.jpg';
@@ -13,17 +14,7 @@ import "./searching.css";
 import { useReducer } from 'react';
 import TextField from "@mui/material/TextField";
 
-
-
-
-
-
-
-
-
-//Array of items for the item type button
-
-//Array of items that populates found items
+// Static data created to display tutors, will be replaced by API calls
 const tutors = [
   {
     'name': 'Alyssa Macy',
@@ -117,7 +108,7 @@ const tutors = [
 
 ]
 
-//Array of items for the subjects button
+// Static data for subjects that are searchable as well as clickable
 const subjectBtnItems = ['All', 'Calculus', 'Engineering', 'Computer Science', 'English', 'Biology', 'Statistics', 'Nursing', 'Physics', 'Psychology'];
 
 const Search = () => {
@@ -153,7 +144,6 @@ const Search = () => {
   function txtUpdate(txt) {
     updateTutorList({ type: 'search', item: txt.target.value.toLowerCase(), initItems: tutors})
   }
-
 
   return (
     <Layout pageTitle="Search Tutors">

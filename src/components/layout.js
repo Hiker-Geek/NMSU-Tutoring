@@ -13,7 +13,9 @@ import {
   navbar,
 } from './layout.module.css'
 
-// Creates layout component (React component)
+// Creates layout component (React component) to keep entire website standardized as well as
+// making over encompassing layout easy to control and modify
+// Currently the layouts biggest job is containing links for site navigation
 const Layout = ({ pageTitle, children }) => {
   return (
     <div className={container}>

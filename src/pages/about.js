@@ -1,3 +1,9 @@
+// As this is the most basic page in our project, it contains necessary steps for 
+// React components to be created such as:
+// - importing dependencies and plugins
+// - defining the components content and functions
+// - exporting component to be rendered and compiled
+
 // Step 1: Import React
 import * as React from 'react'
 // Reference layout from components to keep styling consistent
