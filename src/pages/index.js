@@ -33,14 +33,29 @@ const localizer = dateFnsLocalizer({
 //Developer's note: for the correct date and time dates must be string literals
 const events = [
   {
-    title: "Tutoring Appointment",
+    title: "Tutoring Appointment W/ Jesse",
     start: new Date('2022-12-02 12:00'),
     end: new Date('2022-12-02 12:15')
   },
   {
-    title: "Tutoring Appointment",
+    title: "Tutoring Appointment W/ Mario",
     start: new Date('2022-12-06 14:30'),
     end: new Date('2022-12-06 14:45')
+  },
+  {
+    title: "Tutoring Appointment W/ Daniel",
+    start: new Date('2022-12-06 10:30'),
+    end: new Date('2022-12-06 10:45')
+  },
+  {
+    title: "Tutoring Appointment W/ Micheal",
+    start: new Date('2022-12-06 12:00'),
+    end: new Date('2022-12-06 12:15')
+  },
+  {
+    title: "Tutoring Appointment W/ River",
+    start: new Date('2022-12-09 10:30'),
+    end: new Date('2022-12-09 10:45')
   },
   {
     title: "School Holiday",
@@ -147,9 +162,9 @@ const IndexPage = () => {
       <div id='details-popup' className='scheduling-form'>
         <div className='scheduling-form-content'>
           <div>
-            <h4>Student Name:</h4><br/>
+            <h4>Appointment Info:</h4><br/>
           <input type="text" placeholder="first and last name" 
-          value={eventDetails.title} onChange={(e) => setNewEvent({ ...eventDetails, title: e.target.value })} />&ensp;&ensp;
+          value={eventDetails.title} onChange={(e) => setNewEvent({ ...eventDetails, title: "Tutoring Appointment W/ " +  e.target.value })} />&ensp;&ensp;
         </div>
         <div>
           <h4>Start:</h4>
@@ -182,7 +197,7 @@ const IndexPage = () => {
         <div>
           <h4>Student Name:</h4><br/>
           <input type="text" placeholder="first and last name" 
-          value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />&ensp;&ensp;
+          value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: "Tutoring Appointment W/ " + e.target.value })} />&ensp;&ensp;
         </div>
         <div>
           <h4>Start:</h4>
