@@ -30,7 +30,7 @@ const tutorDB = require('knex')({
 });
 
 //Basic endpoint for all the userInfo
-//example: http://localhost:8000/api/userDetails/478214179
+//example: http://localhost:8000/api/userDetails/1
 app.get('/api/userDetails/:aggieID', async (req, res, next) => {
     try {
         const aggieID = req.params.aggieID;
@@ -91,7 +91,7 @@ app.get('/api/listSchedules', async (req, res, next) => {
 });
 
 //Used to get the information for all the appointments you have booked with any tutor. All you need is that students aggieID
-//Example: http://localhost:8000/api/listBookings/478214179
+//Example: http://localhost:8000/api/1
 app.get('/api/listBookings/:aggieId', async (req, res, next) => {
     try {
         const studentAggieId = req.params.aggieId;
@@ -136,7 +136,7 @@ app.delete('/api/deleteSchedule/:scheduleID', async (req, res, next) => {
 });
 
 //Example PAYLOAD at http://localhost:8000/api/user:
-//              {"aggieID": 800800,
+//              {
 //             "firstname": "Bill",
 //             "lastname": "Bo",
 //             "password": "12345",
@@ -162,7 +162,7 @@ app.post('/api/user', async (req, res, next) => {
 });
 
 //Example PAYLOAD at http://localhost:8000/api/schedule:
-//            {"scheduleID": 4,
+//            {
 //             "scheduledTutorID": 493458463,
 //             "meetTime": "2022-11-25 10:30:00",
 //             "endTime": "2022-11-25 12:30:00",
