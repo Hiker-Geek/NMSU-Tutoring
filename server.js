@@ -1,4 +1,4 @@
-const express = require('express');
+const gatsbyExpress = require('gatsby-plugin-express');
 const path = require("path");
 const app = express();
 const OpenApiValidator = require('express-openapi-validator');
@@ -14,6 +14,15 @@ app.use(OpenApiValidator.middleware({
         validateResponses: true,
     }),
 );
+
+app.use(gatsbyExpress('config/gatsby-express.json', {
+    publicDir: 'public/',
+  template: 'public/index.html',
+
+  // redirects all /path/ to /path
+  // should be used with gatsby-plugin-remove-trailing-slashes
+  redirectSlashes: true,
+}))
 
 app.get('/', function (req, res) {
     res.sendFile(staticSite + "/index.html");
