@@ -29,6 +29,8 @@ const tutorDB = require('knex')({
     useNullAsDefault: true
 });
 
+
+
 //Basic endpoint for all the userInfo
 //example: http://localhost:8000/api/userDetails/478214179
 app.get('/api/userDetails/:aggieID', async (req, res, next) => {
@@ -135,6 +137,18 @@ app.delete('/api/deleteSchedule/:scheduleID', async (req, res, next) => {
     }
 });
 
+//Create Appointment 
+app.post('/api/createAppointment', async (req, res, next) => {
+    try {
+        const {title, allDay, start, end} = req.body;
+        await tutorDB('schedules').insert({title, allDay, start, end,});
+        res.status(201).send(`New appointment: ${req.body.title} from ${req.body.start} to ${req.body.end} has been created`);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
 //Example PAYLOAD at http://localhost:8000/api/user:
 //              {"aggieID": 800800,
 //             "firstname": "Bill",
@@ -194,6 +208,20 @@ app.post('/api/booking', async (req, res, next) => {
         const {appointmentID, studentAggieID, tutorAggieID, schedulingID, bookDate, bookTime} = req.body;
         await tutorDB('booking').insert({appointmentID, studentAggieID, tutorAggieID, schedulingID, bookDate, bookTime});
         res.status(201).send(`${req.body.studentAggieID} booked a appointment with ${req.body.tutorAggieID} at ${req.body.bookTime} ${req.body.bookDate}`);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
+//UpdateAppointment
+app.put('/api/updateAppointment/:title', async (req, res, next) => {
+    try {
+        const changedScheduleID = req.params.scheduleID;
+        const {title, allDay, start, end} = req.body;
+        await tutorDB('schedules as s').where("s.scheduleID", `${changedScheduleID}`)
+            .update({title, allDay, start, end});
+        res.status(200).send(`Appointment has been updated`);
     } catch (error) {
         console.log(error);
         next(error);

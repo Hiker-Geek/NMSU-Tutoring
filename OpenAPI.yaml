@@ -7,6 +7,60 @@ servers:
   - url: /
     description: All localhost enpoints.
 paths:
+
+
+  /api/updateAppointment/{title}:
+    put:
+      parameters:
+        - name: title
+          in: path
+          required: true
+          description: Specific appointment
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful update of an appointment
+      requestBody:
+        description: updating appointment
+        content:
+          application/json:
+            schema:
+              properties:
+                start:
+                  type: dateTime
+                  example: 2022-11-12 13:30:00
+                end:
+                  type: dateTime
+                  example: 2022-11-12 14:30:00
+
+
+/api/createAppointment:
+    post:
+      responses:
+        '201':
+          description: successful creation of schedule.
+      requestBody:
+        description: Creating a schedule
+        content:
+          application/json:
+            schema:
+              properties:
+                title:
+                  type: string
+                  example: Wallace
+                allDay:
+                  type: boolean
+                  example: true
+                start:
+                  type: dateTime
+                  example: 2022-11-12 13:30:00
+                end:
+                  type: dateTime
+                  example: 2022-11-12 14:30:00
+        default:
+          description: unexpected error
+
   /api/listSchedules:
     get:
       description: Get all the schedules for the library.
