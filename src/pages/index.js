@@ -17,9 +17,6 @@ import getDay from 'date-fns/getDay';
 // Import CSS stylesheets
 import "./pages.css";
 
-// axios.<method> will now provide autocomplete and parameter typings
-const axios = require('axios').default;
-
 // Const for local timezone and language
 const locales = {
   "en-US": require("date-fns/locale/en-US"),
@@ -149,7 +146,6 @@ const IndexPage = () => {
     <Layout pageTitle="NMSU Tutor Schedular">
       <div id='add-popup' className='scheduling-form'>
         <div className='scheduling-form-content'>
-        <form method='POST' action='/createTutor'>
         <div>
           <h4>Student Name:</h4><br/>
           <input type="text" placeholder="first and last name" 
@@ -157,9 +153,7 @@ const IndexPage = () => {
         </div>
         <div>
           <h4>Start:</h4>
-          {/* <input type="text"
-          value={newEvent.start}>  */}
-          <DatePicker
+          <DatePicker 
             placeholderText='start date/time'  
             selected={newEvent.start} 
             onChange={(start) => setNewEvent({ ...newEvent, start })}
@@ -167,7 +161,6 @@ const IndexPage = () => {
             timeIntervals={15}
             timeCaption="time"
             dateFormat="MMMM d, yyyy h:mm aa" />
-          {/* </input>   */}
         </div>
         <div>
           <h4>End:</h4>
@@ -181,7 +174,6 @@ const IndexPage = () => {
             dateFormat="MMMM d, yyyy h:mm aa" />
         </div>
         <button className='button' onClick={handleAddEvent}>Schedule</button>
-        </form>
       </div>
       </div>
       {/* <div id='details-popup' className='scheduling-form'>

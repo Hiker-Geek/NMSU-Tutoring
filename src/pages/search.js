@@ -13,6 +13,17 @@ import "./searching.css";
 import { useReducer } from 'react';
 import TextField from "@mui/material/TextField";
 
+
+
+
+
+
+
+
+
+//Array of items for the item type button
+
+//Array of items that populates found items
 const tutors = [
   {
     'name': 'Alyssa Macy',
