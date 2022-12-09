@@ -4,7 +4,11 @@ module.exports = {
     siteUrl: `https://www.yourdomain.tld`,
   },
   plugins: [
-    "gatsby-plugin-image",
-    "gatsby-plugin-sharp"
-  ],
+    {
+      resolve: 'gatsby-plugin-express',
+      options: {
+        output: 'config/gatsby-express.json',
+      }
+    }
+  ]
 }
