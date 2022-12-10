@@ -7,60 +7,6 @@ servers:
   - url: /
     description: All localhost enpoints.
 paths:
-
-
-  /api/updateAppointment/{title}:
-    put:
-      parameters:
-        - name: title
-          in: path
-          required: true
-          description: Specific appointment
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful update of an appointment
-      requestBody:
-        description: updating appointment
-        content:
-          application/json:
-            schema:
-              properties:
-                start:
-                  type: dateTime
-                  example: 2022-11-12 13:30:00
-                end:
-                  type: dateTime
-                  example: 2022-11-12 14:30:00
-
-
-/api/createAppointment:
-    post:
-      responses:
-        '201':
-          description: successful creation of schedule.
-      requestBody:
-        description: Creating a schedule
-        content:
-          application/json:
-            schema:
-              properties:
-                title:
-                  type: string
-                  example: Wallace
-                allDay:
-                  type: boolean
-                  example: true
-                start:
-                  type: dateTime
-                  example: 2022-11-12 13:30:00
-                end:
-                  type: dateTime
-                  example: 2022-11-12 14:30:00
-        default:
-          description: unexpected error
-
   /api/listSchedules:
     get:
       description: Get all the schedules for the library.
@@ -111,12 +57,12 @@ paths:
     get:
       description: Get all the schedules for the library.
       parameters:
-      - name: aggieId
-        in: path
-        required: true
-        description: Bookings for a specific user.
-        schema:
-          type: integer
+        - name: aggieId
+          in: path
+          required: true
+          description: Bookings for a specific user.
+          schema:
+            type: integer
       responses:
         '200':
           description: Successful get of a users appointments.
@@ -291,22 +237,22 @@ paths:
           description: unexpected error
 
   /api/deleteUser/{aggieID}:
-      delete:
-        description: delete a specific user.
-        parameters:
-          - name: aggieID
-            in: path
-            required: true
-            description: specific user.
-            schema:
-              type: integer
-        responses:
-          '200':
-            description: successful delete of a users.
+    delete:
+      description: delete a specific user.
+      parameters:
+        - name: aggieID
+          in: path
+          required: true
+          description: specific user.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful delete of a users.
         # '404':
         #   description: id not found
-          default:
-            description: unexpected error
+        default:
+          description: unexpected error
 
   /api/deleteSchedule/{scheduleID}:
     delete:
@@ -349,7 +295,7 @@ paths:
                   example: password123
                 birthdate:
                   type: string
-                #  format: date
+                  #  format: date
                   example: 2003-1-20
                 email:
                   type: string
