@@ -1,4 +1,4 @@
-const gatsbyExpress = require('gatsby-plugin-express');
+const express = require('express');
 const path = require("path");
 const app = express();
 const OpenApiValidator = require('express-openapi-validator');
@@ -15,15 +15,6 @@ app.use(OpenApiValidator.middleware({
     }),
 );
 
-app.use(gatsbyExpress('config/gatsby-express.json', {
-    publicDir: 'public/',
-  template: 'public/index.html',
-
-  // redirects all /path/ to /path
-  // should be used with gatsby-plugin-remove-trailing-slashes
-  redirectSlashes: true,
-}))
-
 app.get('/', function (req, res) {
     res.sendFile(staticSite + "/index.html");
 });
@@ -38,9 +29,8 @@ const tutorDB = require('knex')({
     useNullAsDefault: true
 });
 
-
-
 //Basic endpoint for all the userInfo
+//example: http://localhost:8000/api/userDetails/478214179
 //example: http://localhost:8000/api/userDetails/1
 app.get('/api/userDetails/:aggieID', async (req, res, next) => {
     try {
@@ -102,6 +92,7 @@ app.get('/api/listSchedules', async (req, res, next) => {
 });
 
 //Used to get the information for all the appointments you have booked with any tutor. All you need is that students aggieID
+//Example: http://localhost:8000/api/listBookings/478214179
 //Example: http://localhost:8000/api/1
 app.get('/api/listBookings/:aggieId', async (req, res, next) => {
     try {
@@ -146,19 +137,8 @@ app.delete('/api/deleteSchedule/:scheduleID', async (req, res, next) => {
     }
 });
 
-//Create Appointment 
-app.post('/api/createAppointment', async (req, res, next) => {
-    try {
-        const {title, allDay, start, end} = req.body;
-        await tutorDB('schedules').insert({title, allDay, start, end,});
-        res.status(201).send(`New appointment: ${req.body.title} from ${req.body.start} to ${req.body.end} has been created`);
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
-});
-
 //Example PAYLOAD at http://localhost:8000/api/user:
+//              {"aggieID": 800800,
 //              {
 //             "firstname": "Bill",
 //             "lastname": "Bo",
@@ -185,6 +165,7 @@ app.post('/api/user', async (req, res, next) => {
 });
 
 //Example PAYLOAD at http://localhost:8000/api/schedule:
+//            {"scheduleID": 4,
 //            {
 //             "scheduledTutorID": 493458463,
 //             "meetTime": "2022-11-25 10:30:00",
@@ -217,20 +198,6 @@ app.post('/api/booking', async (req, res, next) => {
         const {appointmentID, studentAggieID, tutorAggieID, schedulingID, bookDate, bookTime} = req.body;
         await tutorDB('booking').insert({appointmentID, studentAggieID, tutorAggieID, schedulingID, bookDate, bookTime});
         res.status(201).send(`${req.body.studentAggieID} booked a appointment with ${req.body.tutorAggieID} at ${req.body.bookTime} ${req.body.bookDate}`);
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
-});
-
-//UpdateAppointment
-app.put('/api/updateAppointment/:title', async (req, res, next) => {
-    try {
-        const changedScheduleID = req.params.scheduleID;
-        const {title, allDay, start, end} = req.body;
-        await tutorDB('schedules as s').where("s.scheduleID", `${changedScheduleID}`)
-            .update({title, allDay, start, end});
-        res.status(200).send(`Appointment has been updated`);
     } catch (error) {
         console.log(error);
         next(error);
@@ -284,4 +251,3 @@ app.put('/api/updateSchedule/:scheduleID', async (req, res, next) => {
 
 app.listen(8000, () => console.log('Tutoring Dashboard is up.'));
 module.exports = app;
-
