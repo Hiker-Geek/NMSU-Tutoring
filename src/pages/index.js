@@ -77,21 +77,25 @@ const IndexPage = () => {
   // Grab static data created above for Calendar to call and display
   const [allEvents, setAllEvents] = useState(events)
   // Below are both variables used to both display and hide both the create and update popups
-  var addPopup = document.getElementById('add-popup');
-  var detailsPopup = document.getElementById('details-popup');
-
+  if (typeof window !== `undefined`) {
+    var addPopup = document.getElementById('add-popup');
+    var detailsPopup = document.getElementById('details-popup');
+  }
   // Called by Calendar API onSelectSlot()
   // Sets popup to be visible
   function handleSelectSlot() {
-    document.getElementById('add-popup').style.display = "block";
-  }
+    if (typeof document !== `undefined`) 
+      document.getElementById('add-popup').style.display = "block";
+  } 
 
+ if (typeof window !== `undefined`) {
   // If user clicks outside of popup, closes window
-  window.onclick = function(event) {
-    if (event.target == addPopup) {
-      addPopup.style.display = "none";
-    } else if (event.target == detailsPopup) {
-      detailsPopup.style.display = "none";
+    window.onclick = function(event) {
+      if (event.target == addPopup) {
+        addPopup.style.display = "none";
+      } else if (event.target == detailsPopup) {
+        detailsPopup.style.display = "none";
+      }
     }
   }
 
@@ -99,7 +103,8 @@ const IndexPage = () => {
   // Passes event parameter for grabbing selected events details
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
-    document.getElementById('details-popup').style.display = "block";
+    if (typeof window !== `undefined`)
+      document.getElementById('details-popup').style.display = "block";
   }
 
   /*
@@ -127,7 +132,8 @@ const IndexPage = () => {
   // Function to 'handle' when an event is updated, currently only makes popup visible
   // FUTURE IMPLENTATION: Add validation mirroring that of create
   function handleUpdateEvent() {
-    document.getElementById('add-popup').style.display = "none";
+    if (typeof window !== `undefined`)
+      document.getElementById('add-popup').style.display = "none";
   }
 
   // Validation function for new appointment creation as well as creating new event with users entered properties
@@ -158,7 +164,8 @@ const IndexPage = () => {
         newEvent.title =  "Tutoring Appointment W/ " + newEvent.title;
         setAllEvents([...allEvents, newEvent]);
         // If appointment is successfully added, hide popup
-        document.getElementById('add-popup').style.display = "none";
+        if (typeof window !== `undefined`)
+          document.getElementById('add-popup').style.display = "none";
       }
   }
   return (
